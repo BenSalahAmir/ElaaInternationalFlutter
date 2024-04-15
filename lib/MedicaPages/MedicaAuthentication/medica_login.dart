@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,8 @@ import 'package:medica/MedicaPages/MedicaAuthentication/medica_forgotpassword.da
 import 'package:medica/MedicaPages/MedicaAuthentication/medica_register.dart';
 import 'package:medica/MedicaPages/MedicaHome/medica_dashboard.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
+import 'package:http/http.dart' as http;
+
 
 class MedicaLogin extends StatefulWidget {
   const MedicaLogin({Key? key}) : super(key: key);
@@ -22,6 +26,12 @@ class _MedicaLoginState extends State<MedicaLogin> {
   double width = 0.00;
   bool _obscureText = true;
   bool isChecked = false;
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+
+
   void _togglePasswordStatus() {
     setState(() {
       _obscureText = !_obscureText;
@@ -38,6 +48,42 @@ class _MedicaLoginState extends State<MedicaLogin> {
       return Medicacolor.primary;
     }
     return Medicacolor.primary;
+  }
+
+
+
+
+  Future<void> _authenticateUser() async {
+    final String apiUrl = 'http://10.0.2.2:9098/api/auth/signin';
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'username': emailController.text,
+        'password': passwordController.text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      // Successfully authenticated
+      Map<String, dynamic> data = jsonDecode(response.body);
+      // Handle the response data here
+      print(data);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const MedicaDashboard(),
+        ),
+      );
+    } else {
+      // Failed to authenticate
+      print('Failed to authenticate');
+      // Handle error here
+    }
   }
   
   @override
@@ -58,6 +104,9 @@ class _MedicaLoginState extends State<MedicaLogin> {
               Text("Login_to_Your_Account".tr,style: urbanistBold.copyWith(fontSize: 32)),
               SizedBox(height: height/26),
               TextFormField(
+
+                controller: emailController,
+
                 cursorColor: Medicacolor.lightgrey,
                 style: urbanistSemiBold.copyWith(fontSize: 16),
                 // controller: email,
@@ -83,6 +132,8 @@ class _MedicaLoginState extends State<MedicaLogin> {
               ),
               SizedBox(height: height/46),
               TextFormField(
+
+                controller: passwordController,
                 cursorColor: Medicacolor.lightgrey,
                 style: urbanistSemiBold.copyWith(fontSize: 16),
                 // controller: email,
@@ -144,23 +195,14 @@ class _MedicaLoginState extends State<MedicaLogin> {
               InkWell(
                 splashColor: Medicacolor.transparent,
                 highlightColor: Medicacolor.transparent,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const MedicaDashboard();
-                    },
-                  ));
+                onTap: () async {
+                  await _authenticateUser();  // Call the authenticate method
                 },
-                child: Container(
-                  height: height/15,
-                  width: width/1,
-                  decoration: BoxDecoration(
-                    color: Medicacolor.primary,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: Center(child: Text("Sign_in".tr,style: urbanistBold.copyWith(fontSize: 16,color: Medicacolor.white),)),
-                ),
+                child: Text('Sign_in'.tr,
+                    style: urbanistSemiBold.copyWith(
+                        fontSize: 14, color: Medicacolor.primary)),
               ),
+
               SizedBox(height: height/96),
               TextButton(onPressed: () {
                  Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -252,8 +294,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
                       ));
                     },
                     child: Text('Sign_up'.tr,
-                        style: urbanistSemiBold.copyWith(
-                            fontSize: 14, color: Medicacolor.primary)),
+                        style: urbanistSemiBold.copyWith(fontSize: 14, color: Medicacolor.primary)),
                   ),
                 ],
               ),
