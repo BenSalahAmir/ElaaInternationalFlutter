@@ -192,16 +192,28 @@ class _MedicaLoginState extends State<MedicaLogin> {
                   Text("Remember_me".tr,style: urbanistSemiBold.copyWith(fontSize: 14)),
                 ],
               ),
-              InkWell(
-                splashColor: Medicacolor.transparent,
-                highlightColor: Medicacolor.transparent,
-                onTap: () async {
-                  await _authenticateUser();  // Call the authenticate method
-                },
-                child: Text('Sign_in'.tr,
-                    style: urbanistSemiBold.copyWith(
-                        fontSize: 14, color: Medicacolor.primary)),
+              Container(
+                height: height / 15,
+                width: width / 1,
+                decoration: BoxDecoration(
+                  color: Medicacolor.primary,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: InkWell(
+                  splashColor: Medicacolor.transparent,
+                  highlightColor: Medicacolor.transparent,
+                  onTap: () async {
+                    await _authenticateUser();  // Call the authenticate method
+                  },
+                  child: Center(
+                    child: Text(
+                      "Sign_in".tr,
+                      style: urbanistBold.copyWith(fontSize: 16, color: Medicacolor.white),
+                    ),
+                  ),
+                ),
               ),
+
 
               SizedBox(height: height/96),
               TextButton(onPressed: () {
