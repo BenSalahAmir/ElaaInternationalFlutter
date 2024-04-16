@@ -25,9 +25,13 @@ class _MedicaRegisterState extends State<MedicaRegister> {
   double width = 0.00;
   bool _obscureText = true;
   bool isChecked = false;
+  bool _isLoading = false;
+
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _refContratController = TextEditingController();
+
 
 
   void _togglePasswordStatus() {
@@ -49,36 +53,84 @@ class _MedicaRegisterState extends State<MedicaRegister> {
   }
 
 
-  Future<void> _registerUser() async {
-    final url = Uri.parse('http://10.0.2.2:9098/api/auth/signup');
-    final response = await http.post(
-      url,
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+  Future<void> _showDialog(String title, String message) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
       },
-      body: jsonEncode(<String, dynamic>{
-        'username': _usernameController.text,
-        'email': _emailController.text,
-        'password': _passwordController.text,
-        'roles': ['admin'] // or ['admin'] or ['mod'], depending on the role you want to assign
-      }),
     );
+  }
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
 
-    if (response.statusCode == 200) {
-      // If the server returns a 200 OK response,
-      // then parse the JSON.
-      final Map<String, dynamic> data = jsonDecode(response.body);
-      // Handle the response here
-      print(data['message']); // Assuming the response contains a 'message' field
-    } else {
-      // If the server returns an error response,
-      // then throw an exception.
-      throw Exception('Failed to register user');
+  Future<void> _registerUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final url = Uri.parse('http://10.0.2.2:9098/api/auth/signup');
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': _usernameController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+          'roles': ['admin'],
+          'refContrat': _refContratController.text,
+        }),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        await _showDialog('Success', responseData['message']);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MedicaLogin(),
+          ),
+        );
+        // Do not navigate to MedicaLogin on success
+      } else {
+        await _showDialog('Error', responseData['message']);
+        // Stay on the MedicaRegister page on error
+      }
+    } catch (e) {
+      await _showDialog('Error', 'Failed to register user');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
+
+
+
 
 
   @override
@@ -187,6 +239,33 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                 ),
               ),
               SizedBox(height: height / 96),
+              TextFormField(
+                controller: _refContratController,
+                cursorColor: Medicacolor.lightgrey,
+                style: urbanistSemiBold.copyWith(fontSize: 16),
+                textInputAction: TextInputAction.next,
+                decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Icon(Icons.confirmation_number, color: Medicacolor.textgray, size: height / 46,),
+                  ),
+                  fillColor: themedata.isdark ? Medicacolor.darkblack : Medicacolor.container,
+                  filled: true,
+                  hintText: "Ref_Contrat".tr,
+                  hintStyle: urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
+                  border: const OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Medicacolor.primary),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              SizedBox(height: height / 96),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -213,12 +292,17 @@ class _MedicaRegisterState extends State<MedicaRegister> {
               SizedBox(height: height / 96),
               InkWell(
                 onTap: () async {
-                  await _registerUser();
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const MedicaLogin(); // Redirect to login after successful registration
-                    },
-                  ));
+                  setState(() {
+                    _isLoading = true; // Set loading state to true
+                  });
+
+                  await _registerUser(); // Register the user
+
+                  setState(() {
+                    _isLoading = false; // Set loading state to false after registration
+                  });
+
+                  // Navigate to login page after registration
                 },
                 splashColor: Medicacolor.transparent,
                 highlightColor: Medicacolor.transparent,
@@ -229,9 +313,22 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                     color: Medicacolor.primary,
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: Center(child: Text("Sign_up".tr, style: urbanistBold.copyWith(fontSize: 16, color: Medicacolor.white))),
+                  child: _isLoading
+                      ? Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Medicacolor.white),
+                    ),
+                  )
+                      : Center(
+                    child: Text(
+                      "Sign_up".tr,
+                      style: urbanistBold.copyWith(fontSize: 16, color: Medicacolor.white),
+                    ),
+                  ),
                 ),
               ),
+
+
 
               SizedBox(height: height / 16),
               Row(
@@ -308,17 +405,35 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                   InkWell(
                     splashColor: Medicacolor.transparent,
                     highlightColor: Medicacolor.transparent,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const MedicaLogin();
-                        },
-                      ));
+                    onTap: () async {
+                      setState(() {
+                        _isLoading = true;
+                      });
+
+                      await _registerUser(); // Register the user
+
+                      setState(() {
+                        _isLoading = false;
+                      });
+
+                      // Check if registration was successful
+                      if (!_isLoading) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const MedicaLogin();
+                            },
+                          ),
+                        );
+                      }
                     },
-                    child: Text('Sign_in'.tr,
-                        style: urbanistSemiBold.copyWith(
-                            fontSize: 14, color: Medicacolor.primary)),
+                    child: Text(
+                      'Sign_in'.tr,
+                      style: urbanistSemiBold.copyWith(fontSize: 14, color: Medicacolor.primary),
+                    ),
                   ),
+
                 ],
               ),
             ],
