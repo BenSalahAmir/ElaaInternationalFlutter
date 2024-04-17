@@ -50,6 +50,34 @@ class _MedicaLoginState extends State<MedicaLogin> {
     return Medicacolor.primary;
   }
 
+  Future<void> _showDialog(String title, String message) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 
 
 
@@ -82,10 +110,10 @@ class _MedicaLoginState extends State<MedicaLogin> {
     } else {
       // Failed to authenticate
       print('Failed to authenticate');
-      // Handle error here
+      await _showDialog('Error', 'Failed to authenticate. Please check your credentials.');
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -99,7 +127,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
           padding:  EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
           child: Column(
             children: [
-              SvgPicture.asset(MedicaSvgImg.logo,height: height/8),
+              SvgPicture.asset(MedicaSvgImg.logo,height: height/4.5,fit: BoxFit.fitHeight,),
               SizedBox(height: height/26),
               Text("Login_to_Your_Account".tr,style: urbanistBold.copyWith(fontSize: 32)),
               SizedBox(height: height/26),

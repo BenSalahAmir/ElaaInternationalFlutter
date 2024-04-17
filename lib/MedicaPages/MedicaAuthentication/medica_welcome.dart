@@ -44,9 +44,9 @@ class _MedicaWelcomeState extends State<MedicaWelcome> {
         children: [
           Image.asset(MedicaPngImg.welcome),
           SizedBox(height: height/16),
-          Text("Welcome_to_Medica".tr,style: urbanistBold.copyWith(fontSize: 48,color: Medicacolor.primary),textAlign: TextAlign.center),
+          Text("Welcome to Elaa International".tr,style: urbanistBold.copyWith(fontSize: 48,color: Medicacolor.primary),textAlign: TextAlign.center),
           SizedBox(height: height/46),
-          Text("The_best_online_doctor_appointment_consultation_app_of_the_century_for_your_health_and_medical_needs".tr,
+          Text("Un Seul interlocuteur plusieurs services".tr,
               style: urbanistMedium.copyWith(fontSize: 18),textAlign: TextAlign.center),
         ],
       ),

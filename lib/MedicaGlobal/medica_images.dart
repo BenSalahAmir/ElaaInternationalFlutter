@@ -113,5 +113,5 @@ class MedicaSvgImg {
 
   static String onboard3 = "Assets/medicasvgimg/onboard3.svg";
   static String loginoption = "Assets/medicasvgimg/loginoption.svg";
-  static String logo = "Assets/medicasvgimg/logo.svg";
+  static String logo = "Assets/medicasvgimg/ela.svg";
 }
