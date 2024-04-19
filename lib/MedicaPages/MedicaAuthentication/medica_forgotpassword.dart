@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
+import 'package:medica/MedicaPages/MedicaAuthentication/MedicaResetPassword.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:medica/MedicaPages/MedicaAuthentication/medica_otpverify.dart';
 
@@ -103,7 +104,7 @@ class _MedicaForgotPasswordState extends State<MedicaForgotPassword> {
               highlightColor:Medicacolor.transparent,
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const MedicaVerifyotp();
+                  return const MedicaResetPassword();
                 },));
               },
               child: Container(

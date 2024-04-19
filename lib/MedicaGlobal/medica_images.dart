@@ -107,11 +107,19 @@ class MedicaPngImg {
   static String import = "Assets/medicaimages/import.png";
   static String voicee = "Assets/medicaimages/voicee.png";
   static String user = "Assets/medicaimages/user.png";
+  static String forget1 = "Assets/medicaimages/forgetpass1.png";
+  static String forget2 = "Assets/medicaimages/forgetpass2.png";
+  static String forget3 = "Assets/medicaimages/forgetpass3.png";
+
+
+
 }
 
 class MedicaSvgImg {
 
   static String onboard3 = "Assets/medicasvgimg/onboard3.svg";
   static String loginoption = "Assets/medicasvgimg/loginoption.svg";
-  static String logo = "Assets/medicasvgimg/ela.svg";
+  static String logo = "Assets/medicasvgimg/elalogo.svg";
+  static String logo2 = "Assets/medicasvgimg/amir.svg";
+  static String forgot = "Assets/medicasvgimg/forgot.svg";
 }

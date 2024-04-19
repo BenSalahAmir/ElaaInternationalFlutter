@@ -127,7 +127,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
           padding:  EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
           child: Column(
             children: [
-              SvgPicture.asset(MedicaSvgImg.logo,height: height/4.5,fit: BoxFit.fitHeight,),
+              SvgPicture.asset(MedicaSvgImg.logo2,height: height/4.5,fit: BoxFit.fitHeight,),
               SizedBox(height: height/26),
               Text("Login_to_Your_Account".tr,style: urbanistBold.copyWith(fontSize: 32)),
               SizedBox(height: height/26),

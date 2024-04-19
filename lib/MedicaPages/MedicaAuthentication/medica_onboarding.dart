@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
+import 'package:medica/MedicaPages/MedicaAuthentication/medica_login.dart';
 import 'package:medica/MedicaPages/MedicaAuthentication/medica_loginoption.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -131,7 +132,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
               highlightColor: Medicacolor.transparent,
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const MedicaLoginoption();
+                  return const MedicaLogin();
                 },));
               },
               child: Container(
