@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,8 @@ import 'package:medica/MedicaPages/MedicaAppointment/medica_appointmentdetails.d
 import 'package:medica/MedicaPages/MedicaAppointment/medica_cancelappoinment.dart';
 import 'package:medica/MedicaPages/MedicaAppointment/medica_reschedule.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
+import 'package:http/http.dart' as http;
+
 
 class MedicaAppoinment extends StatefulWidget {
   const MedicaAppoinment({Key? key}) : super(key: key);
@@ -37,6 +41,27 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     MedicaPngImg.msg,
     MedicaPngImg.phone,
   ];
+  List<String> serviceNames = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchServices();
+  }
+
+  Future<void> fetchServices() async {
+    final url = Uri.parse('http://10.0.2.2:9091/api/services');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> servicesJson = json.decode(response.body);
+      setState(() {
+        serviceNames = servicesJson.map((service) => service['serviceName'].toString()).toList();
+      });
+    } else {
+      throw Exception('Failed to load services');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -447,6 +472,9 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
       ),
     );
   }
+
+
+
   cancelappintment() {
     showModalBottomSheet(
         backgroundColor: Medicacolor.transparent,
