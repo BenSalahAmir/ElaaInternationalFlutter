@@ -26,20 +26,68 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   double width = 0.00;
   final themedata = Get.put(MedicaThemecontroler());
   List chats = ["Dr.Drake Boeson","Dr.Aidan Allende","Dr.Salvatore Heredia","Dr.Delaney Mangino","Dr.Beckett Calger"];
-  List title = ["Messaging","Video Call","Video Call","Messaging","Video Call"];
+  //List title = ["Messaging","Video Call","Video Call","Messaging","Video Call"];
   List chatimg = [
     MedicaPngImg.doctor1,
     MedicaPngImg.doctor2,
     MedicaPngImg.doctor6,
     MedicaPngImg.doctor4,
     MedicaPngImg.doctor5,
+    MedicaPngImg.doctor1,
+    MedicaPngImg.doctor2,
+    MedicaPngImg.doctor6,
+    MedicaPngImg.doctor4,
+    MedicaPngImg.doctor5,
+    MedicaPngImg.doctor1,
+    MedicaPngImg.doctor2,
+    MedicaPngImg.doctor6,
+    MedicaPngImg.doctor4,
+    MedicaPngImg.doctor5,
+    MedicaPngImg.doctor1,
+    MedicaPngImg.doctor2,
+    MedicaPngImg.doctor6,
   ];
+
   List callimg = [
     MedicaPngImg.msg,
     MedicaPngImg.phone,
     MedicaPngImg.video,
     MedicaPngImg.msg,
     MedicaPngImg.phone,
+    MedicaPngImg.msg,
+    MedicaPngImg.phone,
+    MedicaPngImg.video,
+    MedicaPngImg.msg,
+    MedicaPngImg.phone,
+    MedicaPngImg.msg,
+    MedicaPngImg.phone,
+    MedicaPngImg.video,
+    MedicaPngImg.msg,
+    MedicaPngImg.phone,
+    MedicaPngImg.msg,
+    MedicaPngImg.phone,
+    MedicaPngImg.video,
+  ];
+
+  List title = [
+    "Messaging",
+    "Video Call",
+    "Video Call",
+    "Messaging",
+    "Video Call",
+    "Messaging",
+    "Video Call",
+    "Video Call",
+    "Messaging",
+    "Video Call",
+    "Messaging",
+    "Video Call",
+    "Video Call",
+    "Messaging",
+    "Video Call",
+    "Messaging",
+    "Video Call",
+    "Video Call",
   ];
   List<String> serviceNames = [];
 
@@ -131,135 +179,117 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                       //   ),
                       // )
                       ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
-                                  boxShadow:  [
-                                    BoxShadow(
-                                      blurRadius: 5,
-                                      color: themedata.isdark ? Medicacolor.transparent : Medicacolor.lightgrey,
-                                    )]
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Image.asset(chatimg[index],height: height/8,width: height/8,fit: BoxFit.fitHeight,),
-                                        ),
-                                        SizedBox(
-                                          width: width/2.3,
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(chats[index],style: urbanistBold.copyWith(fontSize: 18)),
-                                              SizedBox(height: height/66),
-                                              Row(
-                                                children: [
-                                                  Text("${title[index]} - ",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                                  Container(
-                                                    height: height/35,
-                                                    width: width/5,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(5),
-                                                      border: Border.all(color:Medicacolor.primary),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text("Upcoming".tr,style: urbanistSemiBold.copyWith(fontSize: 12,color:Medicacolor.primary)),
-                                                    ),
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  blurRadius: 5,
+                                  color: themedata.isdark ? Medicacolor.transparent : Medicacolor.lightgrey,
+                                )
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 66),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.asset(chatimg[index], height: height / 8, width: height / 8, fit: BoxFit.fitHeight),
+                                      ),
+                                      SizedBox(
+                                        width: width / 2.3,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(serviceNames[index], style: urbanistBold.copyWith(fontSize: 18)),
+                                            SizedBox(height: height / 66),
+                                            Row(
+                                              children: [
+                                                Text("${title[index]} - ", style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)),
+                                                Container(
+                                                  height: height / 35,
+                                                  width: width / 5,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(5),
+                                                    border: Border.all(color: Medicacolor.green),
                                                   ),
-                                                ],
-                                              ),
-                                              SizedBox(height: height/66),
-                                              Text("Today | 16:00 PM",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                            ],
+                                                  child: Center(
+                                                    child: Text("Completed".tr, style: urbanistSemiBold.copyWith(fontSize: 12, color: Medicacolor.green)),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: height / 66),
+                                            Text("Today | 16:00 PM", style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)),
+                                          ],
+                                        ),
+                                      ),
+                                      CircleAvatar(
+                                        radius: 28,
+                                        backgroundColor: Medicacolor.lightprimary,
+                                        child: Image.asset(callimg[index].toString(), height: height / 36, color: Medicacolor.primary),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(height: height / 96),
+                                  Divider(color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey),
+                                  SizedBox(height: height / 96),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      InkWell(
+                                        splashColor: Medicacolor.transparent,
+                                        highlightColor: Medicacolor.transparent,
+                                        onTap: () {},
+                                        child: Container(
+                                          height: height / 22,
+                                          width: width / 2.5,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50),
+                                            border: Border.all(color: Medicacolor.primary),
+                                          ),
+                                          child: Center(
+                                            child: Text("Book_Again".tr, style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.primary)),
                                           ),
                                         ),
-                                        InkWell(
-                                          splashColor: Medicacolor.transparent,
-                                          highlightColor: Medicacolor.transparent,
-                                          onTap: () {
-                                            if(index == 0){
-                                               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                                 return const MedicaAppointmentdetails(type: "msg");
-                                               },));
-                                            }else if(index == 1){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                                return const MedicaAppointmentdetails(type: "call",);
-                                              },));
-                                            }else if(index == 2){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                                return const MedicaAppointmentdetails(type: "video",);
-                                              },));
-                                            }
-                                          },
-                                          child: CircleAvatar(
-                                            radius: 28,
-                                            backgroundColor: Medicacolor.lightprimary,
-                                            child: Image.asset(callimg[index].toString(),height: height/36,color: Medicacolor.primary,),
+                                      ),
+                                      InkWell(
+                                        splashColor: Medicacolor.transparent,
+                                        highlightColor: Medicacolor.transparent,
+                                        onTap: () {},
+                                        child: Container(
+                                          height: height / 22,
+                                          width: width / 2.2,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50),
+                                            color: Medicacolor.primary,
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(height: height/96),
-                                    Divider(color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey,),
-                                    SizedBox(height: height/96),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        InkWell(
-                                          splashColor:Medicacolor.transparent,
-                                          highlightColor:Medicacolor.transparent,
-                                          onTap: () {
-                                            cancelappintment();
-                                          },
-                                          child: Container(
-                                            height: height/22,
-                                            width: width/2.1,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(50),
-                                              border: Border.all(color:Medicacolor.primary),
-                                            ),
-                                            child: Center(
-                                              child: Text("Cancel_Appointment".tr,style: urbanistSemiBold.copyWith(fontSize: 15,color:Medicacolor.primary)),
-                                            ),
+                                          child: Center(
+                                            child: Text("Leave_a_Review".tr, style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.white)),
                                           ),
                                         ),
-                                        InkWell(
-                                          splashColor:Medicacolor.transparent,
-                                          highlightColor:Medicacolor.transparent,
-                                          onTap: () {
-                                            Navigator.push(context, MaterialPageRoute(builder: (context) => const MedicaReschedule(),));
-                                          },
-                                          child: Container(
-                                            height: height/22,
-                                            width: width/2.5,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(50),
-                                              color:Medicacolor.primary,
-                                            ),
-                                            child: Center(
-                                              child: Text("Reschedule".tr,style: urbanistSemiBold.copyWith(fontSize: 15,color:Medicacolor.white)),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            );
-                          }, separatorBuilder: (context, index) {
-                        return SizedBox(height: height/36);
-                      }, itemCount: chats.length)
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: height / 36);
+                        },
+                        itemCount: serviceNames.length, // Use serviceNames.length instead of chats.length
+                      )
+
                     ],
                   )
               ),
@@ -297,7 +327,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(chats[index],style: urbanistBold.copyWith(fontSize: 18)),
+                                          Text(serviceNames[index], style: urbanistBold.copyWith(fontSize: 18)),
                                           SizedBox(height: height/66),
                                           Row(
                                             children: [
@@ -377,7 +407,9 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                         );
                       }, separatorBuilder: (context, index) {
                     return SizedBox(height: height/36);
-                  }, itemCount: chats.length)
+                  },
+                    itemCount: serviceNames.length,
+                  )
               ),
             ),
             SingleChildScrollView(
@@ -472,9 +504,9 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
       ),
     );
   }
-
-
-
+  
+  
+  
   cancelappintment() {
     showModalBottomSheet(
         backgroundColor: Medicacolor.transparent,
