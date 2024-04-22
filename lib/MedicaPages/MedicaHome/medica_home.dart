@@ -24,9 +24,9 @@ class _MedicaHomeState extends State<MedicaHome> {
   double width = 0.00;
   int selected = 0;
   final themedata = Get.put(MedicaThemecontroler());
-  List<String> specialname = ["General","Dentist","ophthalmology","Nutritionist","Neurologist","Pediatric","Radiology","More"];
-  List<String> specialimg = [MedicaPngImg.speciality1,MedicaPngImg.speciality2,MedicaPngImg.speciality3,MedicaPngImg.speciality4,MedicaPngImg.speciality5,MedicaPngImg.speciality6,MedicaPngImg.speciality7,MedicaPngImg.speciality8];
-  List<String> category = ["All","General","Dentist","Nutritionist","ophthalmology","Pediatric","Radiology"];
+  List<String> specialname = ["Remorquage","Hospitalisation","Électricien","Avocat","Expertise","Plomberie","Reparation","More"];
+  List<String> specialimg = [MedicaPngImg.remorquage,MedicaPngImg.Hospitalisation,MedicaPngImg.electricien,MedicaPngImg.Avocat,MedicaPngImg.expertice,MedicaPngImg.Plomberie,MedicaPngImg.Reparation,MedicaPngImg.speciality8];
+  List<String> category = ["All","Routiere","Domiciliaire","Médicale","Voyage","Juridique"];
   List<String> doctorname = ["Dr.Travis Westaby","Dr.Nathaniel Valle","Dr.Beckett Calger","Dr.Jada Srnsky","Dr.Bernard Bliss"];
   List<String> doctorimg = [MedicaPngImg.doctor2,MedicaPngImg.doctor1,MedicaPngImg.doctor3,MedicaPngImg.doctor5,MedicaPngImg.doctor4];
   String? username;
@@ -181,7 +181,7 @@ class _MedicaHomeState extends State<MedicaHome> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Doctor_Speciality".tr,style: urbanistBold.copyWith(fontSize: 20)),
+                  Text("Services of assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
                   Text("See_All".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary)),
                 ],
               ),
@@ -223,7 +223,7 @@ class _MedicaHomeState extends State<MedicaHome> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Top_Doctors".tr,style: urbanistBold.copyWith(fontSize: 20)),
+                  Text("Top Type Of Assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
                   InkWell(
                     splashColor: Medicacolor.transparent,
                     highlightColor: Medicacolor.transparent,

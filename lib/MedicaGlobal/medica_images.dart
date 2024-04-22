@@ -12,7 +12,7 @@ class MedicaPngImg {
   static String msg = "Assets/medicaimages/msg.png";
   static String mail = "Assets/medicaimages/mail.png";
   static String editimg = "Assets/medicaimages/editimg.png";
-  static String photo = "Assets/medicaimages/photo.png";
+  static String photo = "Assets/medicaimages/avataruser.png";
   static String photo1 = "Assets/medicaimages/photo1.png";
   static String photo2 = "Assets/medicaimages/photo2.png";
   static String photo3 = "Assets/medicaimages/photo3.png";
@@ -110,6 +110,18 @@ class MedicaPngImg {
   static String forget1 = "Assets/medicaimages/forgetpass1.png";
   static String forget2 = "Assets/medicaimages/forgetpass2.png";
   static String forget3 = "Assets/medicaimages/forgetpass3.png";
+
+
+
+  static String electricien = "Assets/medicaimages/electricien.png";
+  static String expertice = "Assets/medicaimages/Expertise.png";
+  static String Infirmier = "Assets/medicaimages/Infirmier.png";
+  static String Plomberie = "Assets/medicaimages/Plomberie.png";
+  static String remorquage = "Assets/medicaimages/remorquage.png";
+  static String Reparation = "Assets/medicaimages/Reparation.png";
+  static String Serrurier = "Assets/medicaimages/Serrurier.png";
+  static String Avocat = "Assets/medicaimages/Avocat.png";
+  static String Hospitalisation = "Assets/medicaimages/Hospitalisation.png";
 
 
 
