@@ -22,7 +22,7 @@ class _MedicaForgotPasswordState extends State<MedicaForgotPassword> {
   final themedata = Get.put(MedicaThemecontroler());
   int selectindex = 0;
   List name = ["via SMS:","via Email:"];
-  List subname = ["+1 111 ******99","and***ley@yourdomain.com"];
+  List subname = ["+216 *** ***","*******@***.com"];
   List image = [
     MedicaPngImg.msg,
     MedicaPngImg.mail

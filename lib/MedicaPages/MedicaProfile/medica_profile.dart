@@ -13,6 +13,7 @@ import 'package:medica/MedicaPages/MedicaProfile/medica_editprofile.dart';
 import 'package:medica/MedicaPages/MedicaProfile/medica_profilenotification.dart';
 import 'package:medica/MedicaPages/MedicaProfile/medica_security.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MedicaProfile extends StatefulWidget {
   const MedicaProfile({Key? key}) : super(key: key);
@@ -27,6 +28,24 @@ class _MedicaProfileState extends State<MedicaProfile> {
   double width = 0.00;
   bool isDark = true;
   final themedata = Get.put(MedicaThemecontroler());
+
+
+  String? username;
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username');
+    });
+  }
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -76,7 +95,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                 ),
               ),
               SizedBox(height: height/46,),
-              Text("Andrew Ainsley".tr,style: urbanistBold.copyWith(fontSize: 20)),
+              Text(username ?? "Guest", style: urbanistBold.copyWith(fontSize: 19 )),
               SizedBox(height: height/96,),
               Text("+1 111 467 378 399".tr,style: urbanistBold.copyWith(fontSize: 14)),
               SizedBox(height: height/36,),
@@ -324,7 +343,11 @@ class _MedicaProfileState extends State<MedicaProfile> {
                             InkWell(
                               splashColor: Medicacolor.transparent,
                               highlightColor: Medicacolor.transparent,
-                              onTap: () {
+                              onTap: () async {
+                                // Clear SharedPreferences
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                await prefs.clear();
+
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                                   return const MedicaLogin();
                                 },));

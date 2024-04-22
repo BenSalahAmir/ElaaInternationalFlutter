@@ -11,6 +11,7 @@ import 'package:medica/MedicaPages/MedicaAuthentication/medica_register.dart';
 import 'package:medica/MedicaPages/MedicaHome/medica_dashboard.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class MedicaLogin extends StatefulWidget {
@@ -94,20 +95,22 @@ class _MedicaLoginState extends State<MedicaLogin> {
         'password': passwordController.text,
       }),
     );
-
     if (response.statusCode == 200) {
       // Successfully authenticated
       Map<String, dynamic> data = jsonDecode(response.body);
-      // Handle the response data here
-      print(data);
 
+      // Save user data to local storage
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('userId', data['id']);
+      prefs.setString('username', data['username']);
+
+      // Navigate to home page
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const MedicaDashboard(),
         ),
-      );
-    } else {
+      );} else {
       // Failed to authenticate
       print('Failed to authenticate');
       await _showDialog('Error', 'Failed to authenticate. Please check your credentials.');
@@ -127,7 +130,12 @@ class _MedicaLoginState extends State<MedicaLogin> {
           padding:  EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
           child: Column(
             children: [
-              SvgPicture.asset(MedicaSvgImg.logo2,height: height/4.5,fit: BoxFit.fitHeight,),
+              SvgPicture.asset(
+                MedicaSvgImg.logo2,
+                height: height / 4.5,
+                fit: BoxFit.fitHeight,
+                color: Color(0xff0d2f6f),
+              ),
               SizedBox(height: height/26),
               Text("Login_to_Your_Account".tr,style: urbanistBold.copyWith(fontSize: 32)),
               SizedBox(height: height/26),

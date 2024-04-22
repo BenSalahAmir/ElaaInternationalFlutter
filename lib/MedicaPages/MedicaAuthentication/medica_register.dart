@@ -146,7 +146,11 @@ class _MedicaRegisterState extends State<MedicaRegister> {
           padding:  EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
           child: Column(
             children: [
-              SvgPicture.asset(MedicaSvgImg.logo, height: height / 8),
+              SvgPicture.asset(
+                MedicaSvgImg.logo,
+                height: height / 4.5,
+                color: Color(0xff0d2f6f),
+              ),
               SizedBox(height: height / 26),
               Text("Create_New_Account".tr, style: urbanistBold.copyWith(fontSize: 32)),
               SizedBox(height: height / 26),
@@ -251,7 +255,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                   ),
                   fillColor: themedata.isdark ? Medicacolor.darkblack : Medicacolor.container,
                   filled: true,
-                  hintText: "Ref_Contrat".tr,
+                  hintText: "Numero Souscription".tr,
                   hintStyle: urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -314,7 +318,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: _isLoading
-                      ? Center(
+                      ? const Center(
                     child: CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Medicacolor.white),
                     ),
@@ -405,28 +409,15 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                   InkWell(
                     splashColor: Medicacolor.transparent,
                     highlightColor: Medicacolor.transparent,
-                    onTap: () async {
-                      setState(() {
-                        _isLoading = true;
-                      });
-
-                      await _registerUser(); // Register the user
-
-                      setState(() {
-                        _isLoading = false;
-                      });
-
-                      // Check if registration was successful
-                      if (!_isLoading) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const MedicaLogin();
-                            },
-                          ),
-                        );
-                      }
+                    onTap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const MedicaLogin();
+                          },
+                        ),
+                      );
                     },
                     child: Text(
                       'Sign_in'.tr,

@@ -8,6 +8,8 @@ class User {
   String verificationToken;
   List<Role> roles;
 
+
+
   User({
     required this.id,
     required this.username,

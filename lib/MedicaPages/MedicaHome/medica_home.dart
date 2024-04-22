@@ -9,6 +9,7 @@ import 'package:medica/MedicaPages/MedicaHome/medica_notification.dart';
 import 'package:medica/MedicaPages/MedicaHome/medica_search.dart';
 import 'package:medica/MedicaPages/MedicaHome/medica_topdoctor.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MedicaHome extends StatefulWidget {
   const MedicaHome({Key? key}) : super(key: key);
@@ -28,6 +29,25 @@ class _MedicaHomeState extends State<MedicaHome> {
   List<String> category = ["All","General","Dentist","Nutritionist","ophthalmology","Pediatric","Radiology"];
   List<String> doctorname = ["Dr.Travis Westaby","Dr.Nathaniel Valle","Dr.Beckett Calger","Dr.Jada Srnsky","Dr.Bernard Bliss"];
   List<String> doctorimg = [MedicaPngImg.doctor2,MedicaPngImg.doctor1,MedicaPngImg.doctor3,MedicaPngImg.doctor5,MedicaPngImg.doctor4];
+  String? username;
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  _loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username');
+    });
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +73,7 @@ class _MedicaHomeState extends State<MedicaHome> {
                   SizedBox(height: height/120,),
                   Text("Good Morning 👋".tr,style: urbanistRegular.copyWith(fontSize: 16 )),
                   SizedBox(height: height/120,),
-                  Text("Andrew Ainsley".tr,style: urbanistBold.copyWith(fontSize: 19 )),
+                  Text(username ?? "Guest", style: urbanistBold.copyWith(fontSize: 19 )),
                 ],
               ),
               const Spacer(),
