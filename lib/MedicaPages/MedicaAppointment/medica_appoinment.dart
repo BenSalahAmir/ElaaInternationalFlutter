@@ -28,22 +28,22 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   List chats = ["Dr.Drake Boeson","Dr.Aidan Allende","Dr.Salvatore Heredia","Dr.Delaney Mangino","Dr.Beckett Calger"];
   //List title = ["Messaging","Video Call","Video Call","Messaging","Video Call"];
   List chatimg = [
-    MedicaPngImg.doctor1,
-    MedicaPngImg.doctor2,
-    MedicaPngImg.doctor6,
-    MedicaPngImg.doctor4,
-    MedicaPngImg.doctor5,
-    MedicaPngImg.doctor1,
-    MedicaPngImg.doctor2,
-    MedicaPngImg.doctor6,
-    MedicaPngImg.doctor4,
-    MedicaPngImg.doctor5,
-    MedicaPngImg.doctor1,
-    MedicaPngImg.doctor2,
-    MedicaPngImg.doctor6,
-    MedicaPngImg.doctor4,
-    MedicaPngImg.doctor5,
-    MedicaPngImg.doctor1,
+    MedicaPngImg.articleservice,
+    MedicaPngImg.avocatservices,
+    MedicaPngImg.billetterieservices,
+    MedicaPngImg.electricienservices,
+    MedicaPngImg.Expertiseservices,
+    MedicaPngImg.labotechnicienservice,
+    MedicaPngImg.hospitalisationservice,
+    MedicaPngImg.infirmierservice,
+    MedicaPngImg.plombierservices,
+    MedicaPngImg.Rapatriementservices,
+    MedicaPngImg.Reparationservices,
+    MedicaPngImg.sanitaireservice,
+    MedicaPngImg.serrurierservices,
+    MedicaPngImg.retourDomicileservice,
+    MedicaPngImg.remorquageservice,
+    MedicaPngImg.Vitrierservices,
     MedicaPngImg.doctor2,
     MedicaPngImg.doctor6,
   ];
@@ -68,6 +68,28 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     MedicaPngImg.phone,
     MedicaPngImg.video,
   ];
+
+  Map<String, String> serviceImageMap = {
+    "Infirmier": MedicaPngImg.infirmierservice,
+    "Electricien": MedicaPngImg.electricienservices,
+    "Vitrier": MedicaPngImg.Vitrierservices,
+    "Serrurier": MedicaPngImg.serrurierservices,
+    "Plomberie": MedicaPngImg.plombierservices,
+    "Reparation": MedicaPngImg.Reparationservices,
+    "Expertise": MedicaPngImg.Expertiseservices,
+    "Remorquage": MedicaPngImg.remorquageservice,
+    "Technicien de laboratoire et analyse": MedicaPngImg.labotechnicienservice,
+    "Technicien de kine": MedicaPngImg.doctor2,
+    "Second avis medical": MedicaPngImg.articleservice,
+    "Rapatriement": MedicaPngImg.Rapatriementservices,
+    "Sanitaire": MedicaPngImg.sanitaireservice,
+    "Evasan": MedicaPngImg.doctor6,
+    "Retour a domicile": MedicaPngImg.retourDomicileservice,
+    "Billetterie": MedicaPngImg.billetterieservices,
+    "Hospitalisation": MedicaPngImg.hospitalisationservice,
+    "Avocat": MedicaPngImg.avocatservices,
+  };
+
 
   List title = [
     "Messaging",
@@ -202,7 +224,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                     children: [
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
-                                        child: Image.asset(chatimg[index], height: height / 8, width: height / 8, fit: BoxFit.fitHeight),
+                                        child: Image.asset(serviceImageMap[serviceNames[index]] ?? MedicaPngImg.defaultImage, height: height / 8, width: height / 8, fit: BoxFit.fitHeight),
                                       ),
                                       SizedBox(
                                         width: width / 2.3,
@@ -432,69 +454,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                           ],
                         ),
                       )
-                      // ListView.separated(
-                      //     shrinkWrap: true,
-                      //     physics: const NeverScrollableScrollPhysics(),
-                      //     itemBuilder: (context, index) {
-                      //       return Container(
-                      //         decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(20),
-                      //             color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
-                      //             boxShadow: const [
-                      //               BoxShadow(
-                      //                 blurRadius: 5,
-                      //                 color: themedata.isdark ? Medicacolor.transparent : Medicacolor.lightgrey,
-                      //               )]
-                      //         ),
-                      //         child: Padding(
-                      //           padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                      //           child: Row(
-                      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               ClipRRect(
-                      //                 borderRadius: BorderRadius.circular(10),
-                      //                 child: Image.asset(chatimg[index],height: height/8,width: height/8,fit: BoxFit.fitHeight,),
-                      //               ),
-                      //               SizedBox(
-                      //                 width: width/2.3,
-                      //                 child: Column(
-                      //                   crossAxisAlignment: CrossAxisAlignment.start,
-                      //                   children: [
-                      //                     Text(chats[index],style: urbanistBold.copyWith(fontSize: 18)),
-                      //                     SizedBox(height: height/66),
-                      //                     Row(
-                      //                       children: [
-                      //                         Text("${title[index]} - ",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                      //                          Container(
-                      //                            height: height/35,
-                      //                            width: width/5,
-                      //                            decoration: BoxDecoration(
-                      //                              borderRadius: BorderRadius.circular(5),
-                      //                              border: Border.all(color:Medicacolor.red),
-                      //                            ),
-                      //                            child: Center(
-                      //                              child: Text("Cancelled".tr,style: urbanistSemiBold.copyWith(fontSize: 12,color:Medicacolor.red)),
-                      //                            ),
-                      //                          ),
-                      //                       ],
-                      //                     ),
-                      //                     SizedBox(height: height/66),
-                      //                     Text("Today | 16:00 PM",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //                CircleAvatar(
-                      //                 radius: 28,
-                      //                 backgroundColor: Medicacolor.lightprimary,
-                      //                 child: Image.asset(callimg[index].toString(),height: height/36,color: Medicacolor.primary,),
-                      //               )
-                      //             ],
-                      //           ),
-                      //         ),
-                      //       );
-                      //     }, separatorBuilder: (context, index) {
-                      //   return SizedBox(height: height/36);
-                      // }, itemCount: chats.length),
+
                     ],
                   )
               ),

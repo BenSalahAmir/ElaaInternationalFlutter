@@ -69,6 +69,7 @@ flutter:
   assets:
     - Assets/medicaimages/
     - Assets/medicasvgimg/
+    - Assets/medicaimages/services/
 
 
   # To add assets to your application, add an assets section, like this:
