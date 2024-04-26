@@ -103,6 +103,8 @@ class _MedicaLoginState extends State<MedicaLogin> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('userId', data['id']);
       prefs.setString('username', data['username']);
+      prefs.setString('email', data['email']);
+
 
       // Navigate to home page
       Navigator.push(

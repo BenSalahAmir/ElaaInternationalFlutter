@@ -11,6 +11,7 @@ import 'package:medica/MedicaPages/MedicaAppointment/medica_cancelappoinment.dar
 import 'package:medica/MedicaPages/MedicaAppointment/medica_reschedule.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class MedicaAppoinment extends StatefulWidget {
@@ -26,7 +27,6 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   double width = 0.00;
   final themedata = Get.put(MedicaThemecontroler());
   List chats = ["Dr.Drake Boeson","Dr.Aidan Allende","Dr.Salvatore Heredia","Dr.Delaney Mangino","Dr.Beckett Calger"];
-  //List title = ["Messaging","Video Call","Video Call","Messaging","Video Call"];
   List chatimg = [
     MedicaPngImg.articleservice,
     MedicaPngImg.avocatservices,
@@ -112,23 +112,43 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     "Video Call",
   ];
   List<String> serviceNames = [];
+  String? email;
 
   @override
   void initState() {
     super.initState();
-    fetchServices();
+    loadUserData();
+
   }
 
-  Future<void> fetchServices() async {
-    final url = Uri.parse('http://10.0.2.2:9091/api/services');
+
+  Future<void> loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('email');
+    if (email != null) {
+      await fetchServices(email);
+    }
+  }
+
+
+
+
+
+  Future<void> fetchServices(String email) async {
+    final url = Uri.parse('http://10.0.2.2:9091/api/services/test/$email');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final List<dynamic> servicesJson = json.decode(response.body);
       setState(() {
         serviceNames = servicesJson.map((service) => service['serviceName'].toString()).toList();
+        print('ok: $email');
+
       });
+
+
     } else {
+      print('Error: $email');
       throw Exception('Failed to load services');
     }
   }
