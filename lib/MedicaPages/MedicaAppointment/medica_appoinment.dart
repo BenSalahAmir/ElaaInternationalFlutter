@@ -13,6 +13,8 @@ import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/Reservation.dart';
+
 
 class MedicaAppoinment extends StatefulWidget {
   const MedicaAppoinment({Key? key}) : super(key: key);
@@ -113,6 +115,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   ];
   List<String> serviceNames = [];
   String? email;
+  String? username;
 
   @override
   void initState() {
@@ -125,10 +128,87 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   Future<void> loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString('email');
+    username = prefs.getString('username');
+
+
     if (email != null) {
       await fetchServices(email);
     }
   }
+
+
+  Future<void> createReservation(Reservation reservation) async {
+    try {
+      final url = Uri.parse('http://10.0.2.2:9097/api/reservations/add');
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(reservation.toJson()),
+      );
+
+      if (response.statusCode == 200) {
+        // Show success alert
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Success'),
+              content: Text('Reservation created successfully.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Show error alert
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Failed to create reservation.'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      // Handle exceptions
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('An error occurred: $e'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
 
 
 
@@ -306,7 +386,18 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                       InkWell(
                                         splashColor: Medicacolor.transparent,
                                         highlightColor: Medicacolor.transparent,
-                                        onTap: () {},
+                                        onTap: () {
+                                          // Assuming `userName` and `serviceNames` are accessible in this scope
+                                          String selectedService = serviceNames[index]; // Get the selected service name from the index
+                                          Reservation reservation = Reservation(
+                                            serviceName: selectedService,
+                                            userName: username ?? '', // Use the userName attribute here
+                                            userConfirmation: '', // You need to set this according to your logic
+                                            reservationDateTime: DateTime.now(), // You need to set this according to your logic
+                                            isConfirmed: false,
+                                          );
+                                          createReservation(reservation); // Call the createReservation method
+                                        },
                                         child: Container(
                                           height: height / 22,
                                           width: width / 2.2,
@@ -315,7 +406,10 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                             color: Medicacolor.primary,
                                           ),
                                           child: Center(
-                                            child: Text("Leave_a_Review".tr, style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.white)),
+                                            child: Text(
+                                              "Réserver le service".tr,
+                                              style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.white),
+                                            ),
                                           ),
                                         ),
                                       ),
