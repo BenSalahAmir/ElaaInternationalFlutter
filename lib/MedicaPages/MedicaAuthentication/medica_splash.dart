@@ -36,8 +36,8 @@ class _MedicaSplashState extends State<MedicaSplash> {
     return Scaffold(
       body: Center(
         child: Image.asset(
-          MedicaPngImg.iclogo,
-          height: height/6,
+          MedicaPngImg.logoela,
+          height: height/3,
           fit: BoxFit.fitHeight,
         ),
       ),

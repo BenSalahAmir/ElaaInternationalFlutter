@@ -40,7 +40,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
               height: height / 16,
             ),
             Image.asset(
-              MedicaPngImg.onboard1,
+              MedicaPngImg.slide1,
               fit: BoxFit.fill,
             ),
             const Spacer(),
@@ -78,7 +78,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
               height: height / 16,
             ),
             Image.asset(
-              MedicaPngImg.onboard2,
+              MedicaPngImg.slide2,
               fit: BoxFit.fill,
             ),
             const Spacer(),
@@ -115,9 +115,8 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
             SizedBox(
               height: height / 26,
             ),
-            SvgPicture.asset(
-              MedicaSvgImg.onboard3,
-              height: height/3,
+            Image.asset(
+              MedicaPngImg.slide3,
               fit: BoxFit.fill,
             ),
             const Spacer(),

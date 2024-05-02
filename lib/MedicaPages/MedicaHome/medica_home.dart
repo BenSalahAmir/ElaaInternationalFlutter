@@ -173,7 +173,7 @@ class _MedicaHomeState extends State<MedicaHome> {
                         ],
                       ),
                     ),
-                    Image.asset(MedicaPngImg.doctor,height: height/5),
+                    Image.asset(MedicaPngImg.imghome,height: height/5),
                   ],
                 ),
               ),
