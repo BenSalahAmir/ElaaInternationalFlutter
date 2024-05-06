@@ -117,6 +117,13 @@ class MedicaPngImg {
   static String logoela = "Assets/medicaimages/logoela.png";
   static String imghome = "Assets/medicaimages/imghome.png";
 
+  static String logowithoutback = "Assets/medicaimages/logoelawithoutback.png";
+  static String logoelapng = "Assets/medicaimages/logoelapng.png";
+
+
+
+
+
 
 
 

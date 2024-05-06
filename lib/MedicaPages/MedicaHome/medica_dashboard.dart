@@ -65,7 +65,7 @@ class _MedicaDashboardState extends State<MedicaDashboard> {
           activeIcon: Image.asset(MedicaPngImg.activecalender,
               color: Medicacolor.primary,
               height: height / 36),
-          label: 'Appointment'.tr,
+          label: 'services'.tr,
         ),
         BottomNavigationBarItem(
           icon: Image.asset(MedicaPngImg.history,
@@ -74,7 +74,7 @@ class _MedicaDashboardState extends State<MedicaDashboard> {
           activeIcon: Image.asset(MedicaPngImg.activehistory,
               color: Medicacolor.primary,
               height: height / 40),
-          label: 'History'.tr,
+          label: 'historique'.tr,
         ),
         BottomNavigationBarItem(
           icon: Image.asset(MedicaPngImg.articies,
@@ -92,7 +92,7 @@ class _MedicaDashboardState extends State<MedicaDashboard> {
           activeIcon: Image.asset(MedicaPngImg.activeprofile,
               color: Medicacolor.primary,
               height: height / 36),
-          label: 'Profile'.tr,
+          label: 'Profil'.tr,
         ),
       ],
     );

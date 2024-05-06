@@ -132,14 +132,14 @@ class _MedicaLoginState extends State<MedicaLogin> {
           padding:  EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
           child: Column(
             children: [
-              SvgPicture.asset(
-                MedicaSvgImg.logo2,
+              Image.asset(
+                MedicaPngImg.logowithoutback,
                 height: height / 4.5,
                 fit: BoxFit.fitHeight,
-                color: Color(0xff0d2f6f),
+
               ),
               SizedBox(height: height/26),
-              Text("Login_to_Your_Account".tr,style: urbanistBold.copyWith(fontSize: 32)),
+              Text("Connectez-vous".tr,style: urbanistBold.copyWith(fontSize: 32)),
               SizedBox(height: height/26),
               TextFormField(
 
@@ -152,11 +152,11 @@ class _MedicaLoginState extends State<MedicaLogin> {
                 decoration: InputDecoration(
                     prefixIcon: Padding(
                       padding: const EdgeInsets.all(18.0),
-                      child: Image.asset(MedicaPngImg.mail,height: height/46,),
+                      child: Image.asset(MedicaPngImg.user,height: height/46,),
                     ),
                     fillColor: themedata.isdark ?  Medicacolor.darkblack : Medicacolor.container,
                     filled: true,
-                    hintText: "Email".tr,
+                    hintText: "Nom d'utilisateur".tr,
                     hintStyle: urbanistRegular.copyWith(fontSize: 14,color: Medicacolor.textgray),
                     border: const OutlineInputBorder(),
                     enabledBorder:  OutlineInputBorder(
@@ -194,7 +194,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
                       onPressed: _togglePasswordStatus,
                       color: Medicacolor.textgray,
                     ),
-                    hintText: "password".tr,
+                    hintText: "mot de passe".tr,
                     hintStyle: urbanistRegular.copyWith(fontSize: 14,color: Medicacolor.textgray),
                     border: const OutlineInputBorder(),
                     enabledBorder:  OutlineInputBorder(
@@ -227,7 +227,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
                       );
                     },
                   ),
-                  Text("Remember_me".tr,style: urbanistSemiBold.copyWith(fontSize: 14)),
+                  Text("Souviens-toi de moi".tr,style: urbanistSemiBold.copyWith(fontSize: 14)),
                 ],
               ),
               Container(
@@ -245,7 +245,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
                   },
                   child: Center(
                     child: Text(
-                      "Sign_in".tr,
+                      "Se connecter".tr,
                       style: urbanistBold.copyWith(fontSize: 16, color: Medicacolor.white),
                     ),
                   ),
@@ -258,7 +258,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
                  Navigator.push(context, MaterialPageRoute(builder: (context) {
                    return const MedicaForgotPassword();
                  },));
-              }, child: Text("Forgot_the_password".tr,style: urbanistSemiBold.copyWith(fontSize: 16,color: Medicacolor.primary))),
+              }, child: Text("J'ai oublié le mot de passe".tr,style: urbanistSemiBold.copyWith(fontSize: 16,color: Medicacolor.primary))),
               SizedBox(height: height/46),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -270,7 +270,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
                       color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.bggray),
                   SizedBox(width: width / 26),
                   Text(
-                    "or_continue_with".tr,
+                    "ou continuez avec".tr,
                     style: urbanistSemiBold.copyWith(
                         fontSize: 15,color: Medicacolor.textgray),
                   ),
@@ -329,7 +329,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Dont_have_an_account'.tr,
+                  Text("Je n'ai pas de compte".tr,
                       style: urbanistRegular.copyWith(
                           fontSize: 14, color: Medicacolor.textgray)),
                   SizedBox(width: width/96),
@@ -343,7 +343,7 @@ class _MedicaLoginState extends State<MedicaLogin> {
                         },
                       ));
                     },
-                    child: Text('Sign_up'.tr,
+                    child: Text("S'inscrire".tr,
                         style: urbanistSemiBold.copyWith(fontSize: 14, color: Medicacolor.primary)),
                   ),
                 ],

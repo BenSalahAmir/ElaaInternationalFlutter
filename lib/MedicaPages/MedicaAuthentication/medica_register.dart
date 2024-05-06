@@ -146,13 +146,14 @@ class _MedicaRegisterState extends State<MedicaRegister> {
           padding:  EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
           child: Column(
             children: [
-              SvgPicture.asset(
-                MedicaSvgImg.logo,
+              Image.asset(
+                MedicaPngImg.logowithoutback,
                 height: height / 4.5,
-                color: Color(0xff0d2f6f),
+                fit: BoxFit.fitHeight,
+
               ),
               SizedBox(height: height / 26),
-              Text("Create_New_Account".tr, style: urbanistBold.copyWith(fontSize: 32)),
+              Text("Créer un compte".tr, style: urbanistBold.copyWith(fontSize: 32)),
               SizedBox(height: height / 26),
               TextFormField(
                 controller: _emailController,
@@ -167,7 +168,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                   ),
                   fillColor: themedata.isdark ? Medicacolor.darkblack : Medicacolor.container,
                   filled: true,
-                  hintText: "Email".tr,
+                  hintText: "adresse e-mail".tr,
                   hintStyle: urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -203,7 +204,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                     onPressed: _togglePasswordStatus,
                     color: Medicacolor.textgray,
                   ),
-                  hintText: "password".tr,
+                  hintText: "mot de passe".tr,
                   hintStyle: urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -229,7 +230,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                   ),
                   fillColor: themedata.isdark ? Medicacolor.darkblack : Medicacolor.container,
                   filled: true,
-                  hintText: "Username".tr,
+                  hintText: "nom d'utilisateur".tr,
                   hintStyle: urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
                   border: const OutlineInputBorder(),
                   enabledBorder: OutlineInputBorder(
@@ -290,7 +291,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                       });
                     },
                   ),
-                  Text("Remember_me".tr, style: urbanistSemiBold.copyWith(fontSize: 14)),
+                  Text("souviens-toi de moi".tr, style: urbanistSemiBold.copyWith(fontSize: 14)),
                 ],
               ),
               SizedBox(height: height / 96),
@@ -325,7 +326,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                   )
                       : Center(
                     child: Text(
-                      "Sign_up".tr,
+                      "s'inscrire".tr,
                       style: urbanistBold.copyWith(fontSize: 16, color: Medicacolor.white),
                     ),
                   ),
@@ -345,7 +346,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                     color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.bggray,
                   ),
                   SizedBox(width: width / 26),
-                  Text("or_continue_with".tr, style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.textgray)),
+                  Text("ou continuez avec".tr, style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.textgray)),
                   SizedBox(width: width / 26),
                   Container(
                     height: height / 500,
@@ -402,7 +403,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Already_have_an_account'.tr,
+                  Text('Vous avez déjà un compte'.tr,
                       style: urbanistRegular.copyWith(
                           fontSize: 14, color: Medicacolor.textgray)),
                   SizedBox(width: width/96),
@@ -420,7 +421,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
                       );
                     },
                     child: Text(
-                      'Sign_in'.tr,
+                      'Se connecter'.tr,
                       style: urbanistSemiBold.copyWith(fontSize: 14, color: Medicacolor.primary),
                     ),
                   ),

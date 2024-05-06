@@ -71,7 +71,7 @@ class _MedicaHomeState extends State<MedicaHome> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: height/120,),
-                  Text("Good Morning 👋".tr,style: urbanistRegular.copyWith(fontSize: 16 )),
+                  Text("Bonjour 👋".tr,style: urbanistRegular.copyWith(fontSize: 16 )),
                   SizedBox(height: height/120,),
                   Text(username ?? "Guest", style: urbanistBold.copyWith(fontSize: 19 )),
                 ],
@@ -129,7 +129,7 @@ class _MedicaHomeState extends State<MedicaHome> {
                       children: [
                         Image.asset(MedicaPngImg.search,height: height/36),
                         SizedBox(width: width/16),
-                        Text("Search".tr,style: urbanistRegular.copyWith(fontSize: 14,color: Medicacolor.textgray)),
+                        Text("Recherche".tr,style: urbanistRegular.copyWith(fontSize: 14,color: Medicacolor.textgray)),
                         const Spacer(),
                         Image.asset(MedicaPngImg.filter,height: height/46,color: Medicacolor.primary),
                       ],

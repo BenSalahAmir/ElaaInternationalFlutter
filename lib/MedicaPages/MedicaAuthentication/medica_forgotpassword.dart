@@ -21,7 +21,7 @@ class _MedicaForgotPasswordState extends State<MedicaForgotPassword> {
   double width = 0.00;
   final themedata = Get.put(MedicaThemecontroler());
   int selectindex = 0;
-  List name = ["via SMS:","via Email:"];
+  List name = ["Par SMS:","Par adresse e-mail:"];
   List subname = ["+216 *** ***","*******@***.com"];
   List image = [
     MedicaPngImg.msg,
@@ -39,7 +39,7 @@ class _MedicaForgotPasswordState extends State<MedicaForgotPassword> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("Forgot_Password".tr,style: urbanistBold.copyWith(fontSize: 24)),
+            Text("Mot de passe oublié".tr,style: urbanistBold.copyWith(fontSize: 24)),
           ],
         ),
       ),
@@ -53,7 +53,7 @@ class _MedicaForgotPasswordState extends State<MedicaForgotPassword> {
               child: Image.asset(MedicaPngImg.forgot,height: height/4,),
             ),
             SizedBox(height: height/36,),
-            Text("Select_which_contact_details_should_we_use_to_reset_your_password".tr,style: urbanistRegular.copyWith(fontSize: 14,)),
+            Text("Sélectionnez les coordonnées que nous devons utiliser pour réinitialiser votre mot de passe".tr,style: urbanistRegular.copyWith(fontSize: 14,)),
             SizedBox(height: height/36,),
             ListView.builder(
               itemCount: name.length,

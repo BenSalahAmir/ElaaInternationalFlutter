@@ -110,7 +110,7 @@ class _MedicaResetPasswordState extends State<MedicaResetPassword> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("Reset_Password".tr,
+            Text("Réinitialiser le mot de passe".tr,
                 style: urbanistBold.copyWith(fontSize: 24)),
           ],
         ),
@@ -129,7 +129,7 @@ class _MedicaResetPasswordState extends State<MedicaResetPassword> {
                 ),
               ),
               SizedBox(height: height / 50),
-              Text("Please enter your email to reset your password".tr,
+              Text("Veuillez entrer votre email pour réinitialiser votre mot de passe".tr,
                   style: urbanistRegular.copyWith(fontSize: 14)),
               SizedBox(height: height / 50),
               TextFormField(
@@ -177,7 +177,7 @@ class _MedicaResetPasswordState extends State<MedicaResetPassword> {
                         ? CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     )
-                        : Text("Reset Password".tr,
+                        : Text("réinitialiser le mot de passe".tr,
                         style: urbanistSemiBold.copyWith(fontSize: 16, color: Medicacolor.white)),
                   ),
                 ),

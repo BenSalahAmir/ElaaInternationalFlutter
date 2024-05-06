@@ -45,7 +45,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
             ),
             const Spacer(),
             Text(
-              "Thousands_of_doctors_experts_to_help_your_health".tr,
+              "Bienvenue sur Elaa International".tr,
               style: urbanistBold.copyWith(fontSize: 35,color: themedata.isdark ? Medicacolor.white :  Medicacolor.primary),
               textAlign: TextAlign.center,
             ),
@@ -59,7 +59,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
               ),
               child: Center(
                 child: Text(
-                  "Next".tr,
+                  "suivant".tr,
                   style: urbanistBold.copyWith(
                       fontSize: 16, color: Medicacolor.white),
                 ),
@@ -83,7 +83,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
             ),
             const Spacer(),
             Text(
-              "Health_checks_consultations_easily_anywhere_anytime".tr,
+              "Simplifiez votre parcours d'assurance avec Elaa International".tr,
               style: urbanistBold.copyWith(fontSize: 35,color: themedata.isdark ? Medicacolor.white :  Medicacolor.primary),
               textAlign: TextAlign.center,
             ),
@@ -97,7 +97,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
               ),
               child: Center(
                 child: Text(
-                  "Next".tr,
+                  "suivant".tr,
                   style: urbanistBold.copyWith(
                       fontSize: 16, color: Medicacolor.white),
                 ),
@@ -121,7 +121,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
             ),
             const Spacer(),
             Text(
-              "Lets_start_living_healthy_and_well_with_us_right_now".tr,
+              "Commençons à vivre avec nous dès maintenant".tr,
               style: urbanistBold.copyWith(fontSize: 35,color: themedata.isdark ? Medicacolor.white : Medicacolor.primary),
               textAlign: TextAlign.center,
             ),
@@ -143,7 +143,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
                 ),
                 child: Center(
                   child: Text(
-                    "Get_Started".tr,
+                    "Commencer".tr,
                     style: urbanistBold.copyWith(
                         fontSize: 16, color: Medicacolor.white),
                   ),

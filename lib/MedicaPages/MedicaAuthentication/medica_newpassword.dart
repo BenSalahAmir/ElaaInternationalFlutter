@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
+import 'package:medica/MedicaPages/MedicaAuthentication/medica_login.dart';
 import 'package:medica/MedicaPages/MedicaHome/medica_dashboard.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
@@ -73,15 +74,15 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
 
         if (jsonResponse['result'] == 1) {
           alertSuccess();
-          goToDashboard();
+          goToLogin();
         } else {
           // Password reset failed
           // Handle the error accordingly
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Error'),
-              content: Text('Failed to reset password. Please try again.'),
+              title: Text('Erreur'),
+              content: Text('Échec de la réinitialisation du mot de passe. Veuillez réessayer.'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -96,8 +97,8 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to reset password. Please try again.'),
+            title: Text('Erreur'),
+            content: Text('Échec de la réinitialisation du mot de passe. Veuillez réessayer.'),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -108,7 +109,7 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
         );
       }
     } catch (e) {
-      print('Error: $e');
+      print('Erreur: $e');
     }
   }
 
@@ -117,6 +118,13 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const MedicaDashboard()),
+    );
+  }
+  void goToLogin() async {
+    await Future.delayed(const Duration(seconds: 1));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MedicaLogin()),
     );
   }
 
@@ -132,8 +140,8 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text("Create_New_Password".tr,
-                style: urbanistBold.copyWith(fontSize: 24)),
+            Text("Créer un nouveau mot de passe".tr,
+                style: urbanistBold.copyWith(fontSize: 18)),
           ],
         ),
       ),
@@ -151,7 +159,7 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
             ),
             SizedBox(height: height / 16),
             Text(
-              "Create_Your_New_Password".tr,
+              "Créez votre nouveau mot de passe".tr,
               style: urbanistMedium.copyWith(fontSize: 18),
             ),
             SizedBox(height: height / 36),
@@ -168,7 +176,7 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
                 fillColor:
                 themedata.isdark ? Medicacolor.darkblack : Medicacolor.container,
                 filled: true,
-                hintText: "Email".tr,
+                hintText: "adresse e-mail".tr,
                 hintStyle:
                 urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
                 border: const OutlineInputBorder(),
@@ -197,7 +205,7 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
                 themedata.isdark ? Medicacolor.darkblack : Medicacolor.container,
                 filled: true,
                 // Remove the suffixIcon property for the verification code text field
-                hintText: "Verification_code".tr,
+                hintText: "Le code de vérification".tr,
                 hintStyle:
                 urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
                 border: const OutlineInputBorder(),
@@ -239,7 +247,7 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
                   },
                   color: Medicacolor.textgray,
                 ),
-                hintText: "New_password".tr,
+                hintText: "Nouveau mot de passe".tr,
                 hintStyle:
                 urbanistRegular.copyWith(fontSize: 14, color: Medicacolor.textgray),
                 border: const OutlineInputBorder(),
@@ -273,7 +281,7 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
                     });
                   },
                 ),
-                Text("Remember_me".tr,
+                Text("Souviens-toi de moi".tr,
                     style: urbanistSemiBold.copyWith(fontSize: 14)),
               ],
             ),
@@ -315,11 +323,11 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
               children: [
                 Image.asset(MedicaPngImg.signinsuccess, height: height / 6, fit: BoxFit.fill),
                 SizedBox(height: height / 36),
-                Text("Congratulations".tr,
+                Text("Toutes nos félicitations".tr,
                     style: urbanistBold.copyWith(fontSize: 24, color: Medicacolor.primary),
                     textAlign: TextAlign.center),
                 SizedBox(height: height / 86),
-                Text("Your_account_is_ready_to_use_You_will_be_redirected_to_the_Home_page_in_a_few_seconds".tr,
+                Text("Votre compte est prêt à être utilisé Vous serez redirigé vers la page de connexion dans quelques secondes".tr,
                     style: urbanistRegular.copyWith(fontSize: 16), textAlign: TextAlign.center),
                 SizedBox(height: height / 46),
                 Image.asset(MedicaPngImg.circular, height: height / 20),
