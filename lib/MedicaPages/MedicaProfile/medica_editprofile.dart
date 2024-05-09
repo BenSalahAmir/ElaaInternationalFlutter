@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../MedicaGlobal/medica_images.dart';
 import 'package:http/http.dart' as http;
 
+import '../MedicaHome/medica_dashboard.dart';
+
 class MedicaEditprofile extends StatefulWidget {
   const MedicaEditprofile({Key? key}) : super(key: key);
 
@@ -82,6 +84,9 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
   void initState() {
     super.initState();
     _loadUserData();
+    if (tunisianRegions.isNotEmpty) {
+      selectedRegion = tunisianRegions[0];
+    }
   }
   _loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -95,12 +100,9 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
       _id.text= id ?? '';
 
       print("test load user data "+ _id.text+_emailController.text+_usernameController.text);
-
-
-
-      // Populate other fields if needed
     });
   }
+
   Future<void> _showDialog(String title, String message) async {
     return showDialog<void>(
       context: context,
@@ -128,30 +130,24 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
     );
   }
 
-
-
   void _updateProfile() async {
-    print(_id.text+_emailController.text+_usernameController.text);
-
-
-
     setState(() {
       _isLoading = true;
     });
 
-    // Prepare the updated user data
-    User updatedUser = User(
-      id: _id.text,
-      username: _usernameController.text,
-      email: _emailController.text,
-      password: _passwordController.text, // Don't send password when updating profile
-      isverified: 1, // Set default value, it might not be updated
-      userCode: '', // Set default value, it might not be updated
-      verificationToken: '', // Set default value, it might not be updated
-      region: _region.text, // Set default value, it might not be updated
-      numeroTelephone: int.parse(_numeroTelephone.text),
-      roles: [], // Set default value, it might not be updated
-    );
+    // Check if any of the text fields is empty
+    if (_usernameController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _region.text.isEmpty ||
+        _numeroTelephone.text.isEmpty) {
+      // Show an error message and return without making the API call
+      await _showDialog('Error', 'Please fill in all the fields');
+      setState(() {
+        _isLoading = false;
+      });
+      return;
+    }
 
     try {
       final url = Uri.parse('http://10.0.2.2:9098/api/auth/updateuser');
@@ -160,18 +156,15 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-
         body: jsonEncode(<String, dynamic>{
-          'id':_id.text,
+          'id': _id.text,
           'username': _usernameController.text,
           'password': _passwordController.text,
           'email': _emailController.text,
-          'region':_region.text,
-          'numeroTelephone':int.parse(_numeroTelephone.text),
+          'region': _region.text,
+          'numeroTelephone': int.parse(_numeroTelephone.text),
         }),
       );
-      print("donneeeeeeeeeeee "+_id.text+_emailController.text+_usernameController.text);
-
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
@@ -179,7 +172,8 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
       final Map<String, dynamic> responseData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        await _showDialog('Success', responseData['message']);
+        alertSuccess();
+        goToDashboard();
         // Handle success response, you might want to navigate to another screen or update UI accordingly
       } else {
         await _showDialog('Error', responseData['message']);
@@ -195,10 +189,6 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
   }
 
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -209,7 +199,7 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
         leadingWidth: width/10,
         title: Row(
           children: [
-            Text("Edit_Profile".tr,style: urbanistBold.copyWith(fontSize: 22 )),
+            Text("Modifier Profil".tr,style: urbanistBold.copyWith(fontSize: 22 )),
           ],
         ),
       ),
@@ -218,13 +208,22 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
           padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
           child: Column(
             children: [
+              Center(
+                child: Image.asset(MedicaPngImg.updateprofil,height: height/4,),
+              ),
+              SizedBox(height: height/36,),
               TextField(
                 controller: _usernameController,
                 style: urbanistSemiBold.copyWith(fontSize: 16,),
                 decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Image.asset(MedicaPngImg.user, height: height / 40,),
+                  ),
                   hintStyle: urbanistRegular.copyWith(fontSize: 16,color:Medicacolor.textgray,),
                   hintText: "nom d'utilisateur ".tr,
                   fillColor: themedata.isdark?Medicacolor.darkblack:Medicacolor.container,
+
                   filled: true,
                   //  prefixIcon:Icon(Icons.search_rounded,size: height/36,color: Medicacolor.textgray,),
                   enabledBorder: OutlineInputBorder(
@@ -238,11 +237,8 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
                 ),
               ),
               SizedBox(height: height/46,),
-
-
               TextField(
                 controller: _passwordController,
-
                 cursorColor: Medicacolor.lightgrey,
                 style: urbanistSemiBold.copyWith(fontSize: 16),
                 obscureText: _obscureText,
@@ -276,8 +272,6 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
                 ),
               ),
               SizedBox(height: height/46,),
-
-
               TextField(
                 controller: _emailController,
                 style: urbanistSemiBold.copyWith(fontSize: 16,),
@@ -298,18 +292,26 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
                 ),
               ),
               SizedBox(height: height/46,),
-
-
-              TextField(
-                controller: _region,
-
-                style: urbanistSemiBold.copyWith(fontSize: 16,),
+              DropdownButtonFormField<String>(
+                value: selectedRegion,
+                items: tunisianRegions.map((String region) {
+                  return DropdownMenuItem<String>(
+                    value: region,
+                    child: Text(region),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedRegion = newValue!;
+                    _region.text = selectedRegion; // Set the selected region to the text field
+                  });
+                },
                 decoration: InputDecoration(
                   hintStyle: urbanistRegular.copyWith(fontSize: 16,color:Medicacolor.textgray,),
                   hintText: "Choisissez le pays".tr,
                   fillColor: themedata.isdark?Medicacolor.darkblack:Medicacolor.container,
                   filled: true,
-                  suffixIcon:Icon(Icons.arrow_drop_down_sharp,size: height/36,color: Medicacolor.textgray,),
+                  //suffixIcon:Icon(Icons.arrow_drop_down_sharp,size: height/36,color: Medicacolor.textgray,),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide.none
@@ -323,7 +325,6 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
               SizedBox(height: height/46,),
               IntlPhoneField(
                 controller: _numeroTelephone,
-
                 flagsButtonPadding: const EdgeInsets.all(8),
                 dropdownIconPosition: IconPosition.trailing,
                 style: urbanistSemiBold.copyWith(fontSize: 16),
@@ -344,13 +345,11 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
                       borderSide: BorderSide(color: Medicacolor.primary)
                   ),
                 ),
-                initialCountryCode: 'Un',
-
+                initialCountryCode: 'TN', // Set the initial country code to 'TN' for Tunisia
                 onChanged: (phone) {
                 },
               ),
               SizedBox(height: height/46,),
-
             ],
           ),
         ),
@@ -377,6 +376,44 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
         ),
       ),
 
+    );
+  }
+
+
+  alertSuccess() async {
+    return await showDialog(
+      builder: (context) => AlertDialog(
+        backgroundColor: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(52)),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: width / 46, vertical: height / 46),
+            child: Column(
+              children: [
+                Image.asset(MedicaPngImg.signinsuccess, height: height / 6, fit: BoxFit.fill),
+                SizedBox(height: height / 36),
+                Text("Toutes nos félicitations".tr,
+                    style: urbanistBold.copyWith(fontSize: 24, color: Medicacolor.primary),
+                    textAlign: TextAlign.center),
+                SizedBox(height: height / 86),
+                Text("Votre compte est prêt à être utilisé Vous serez redirigé vers la page de connexion dans quelques secondes".tr,
+                    style: urbanistRegular.copyWith(fontSize: 16), textAlign: TextAlign.center),
+                SizedBox(height: height / 46),
+                Image.asset(MedicaPngImg.circular, height: height / 20),
+              ],
+            ),
+          )
+        ],
+      ),
+      context: context,
+    );
+  }
+  void goToDashboard() async {
+    await Future.delayed(const Duration(seconds: 1));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MedicaDashboard()),
     );
   }
 }
