@@ -6,9 +6,9 @@ class User {
   int isverified;
   String userCode;
   String verificationToken;
+  String region;
+  int numeroTelephone;
   List<Role> roles;
-
-
 
   User({
     required this.id,
@@ -18,6 +18,8 @@ class User {
     required this.isverified,
     required this.userCode,
     required this.verificationToken,
+    required this.numeroTelephone,
+    required this.region,
     required this.roles,
   });
 
@@ -30,8 +32,24 @@ class User {
       isverified: json['isverified'],
       userCode: json['userCode'],
       verificationToken: json['verificationToken'],
-      roles: (json['roles'] as List).map((role) => Role.fromJson(role)).toList(),
+      numeroTelephone: json['numeroTelephone'],
+      region: json['region'],
+      roles: List<Role>.from(json['roles'].map((roleJson) => Role.fromJson(roleJson))),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'username': username,
+      'email': email,
+      'password': password, // Make sure to handle password securely on the server side
+      'isverified': isverified,
+      'userCode': userCode,
+      'verificationToken': verificationToken,
+      'numeroTelephone': numeroTelephone,
+      'region': region,
+    };
   }
 }
 
@@ -49,5 +67,12 @@ class Role {
       id: json['id'],
       name: json['name'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+    };
   }
 }

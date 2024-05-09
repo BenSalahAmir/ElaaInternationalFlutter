@@ -114,8 +114,8 @@ class _MedicaLoginState extends State<MedicaLogin> {
         ),
       );} else {
       // Failed to authenticate
-      print('Failed to authenticate');
-      await _showDialog('Error', 'Failed to authenticate. Please check your credentials.');
+      print("Échec de l'authentification");
+      await _showDialog('Erreur', "Échec de l'authentification. Veuillez vérifier vos informations d'identification.");
     }
   }
 

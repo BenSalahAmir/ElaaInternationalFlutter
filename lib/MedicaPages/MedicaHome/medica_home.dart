@@ -24,7 +24,7 @@ class _MedicaHomeState extends State<MedicaHome> {
   double width = 0.00;
   int selected = 0;
   final themedata = Get.put(MedicaThemecontroler());
-  List<String> specialname = ["Remorquage","Hospitalisation","Électricien","Avocat","Expertise","Plomberie","Reparation","More"];
+  List<String> specialname = ["Remorquage","Hospitalisation","Électricien","Avocat","Expertise","Plomberie","Reparation","Plus"];
   List<String> specialimg = [MedicaPngImg.remorquage,MedicaPngImg.Hospitalisation,MedicaPngImg.electricien,MedicaPngImg.Avocat,MedicaPngImg.expertice,MedicaPngImg.Plomberie,MedicaPngImg.Reparation,MedicaPngImg.speciality8];
   List<String> category = ["All","Routiere","Domiciliaire","Médicale","Voyage","Juridique"];
   List<String> doctorname = ["Dr.Travis Westaby","Dr.Nathaniel Valle","Dr.Beckett Calger","Dr.Jada Srnsky","Dr.Bernard Bliss"];
@@ -153,12 +153,12 @@ class _MedicaHomeState extends State<MedicaHome> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Medical Checks!".tr,style: urbanistBold.copyWith(fontSize: 20,color: Medicacolor.white)),
+                          Text("Couverture sécurisée!".tr,style: urbanistBold.copyWith(fontSize: 20,color: Medicacolor.white)),
                           SizedBox(height: height/96),
                           SizedBox(
                             width: width/1.7,
-                            child: Text("checks your health condition regularly to minimize the incidence of disease the future.",
-                              style: urbanistLight.copyWith(fontSize: 14,color: Medicacolor.white)),
+                            child: Text("Votre solution complète de gestion des assurances. Avec Elaa International, restez maître de vos polices d’assurance sans effort.",
+                              style: urbanistLight.copyWith(fontSize: 11,color: Medicacolor.white)),
                           ),
                           SizedBox(height: height/56),
                           Container(
@@ -168,7 +168,7 @@ class _MedicaHomeState extends State<MedicaHome> {
                               borderRadius: BorderRadius.circular(25),
                               color: Medicacolor.white,
                             ),
-                            child: Center(child: Text("Check Now",style: urbanistSemiBold.copyWith(fontSize: 16,color: Medicacolor.primary),)),
+                            child: Center(child: Text("Vérifie maintenant",style: urbanistSemiBold.copyWith(fontSize: 13,color: Medicacolor.primary),)),
                           ),
                         ],
                       ),
@@ -181,8 +181,8 @@ class _MedicaHomeState extends State<MedicaHome> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Services of assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
-                  Text("See_All".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary)),
+                  Text("Services d'assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
+                  Text("Voir tout".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary)),
                 ],
               ),
               SizedBox(height: height/46),
@@ -223,7 +223,7 @@ class _MedicaHomeState extends State<MedicaHome> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Top Type Of Assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
+                  Text("Meilleur type d'assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
                   InkWell(
                     splashColor: Medicacolor.transparent,
                     highlightColor: Medicacolor.transparent,
@@ -232,7 +232,7 @@ class _MedicaHomeState extends State<MedicaHome> {
                           return const MedicaTopdoctor();
                         },));
                       },
-                      child: Text("See_All".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary))),
+                      child: Text("Voir tout".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary))),
                 ],
               ),
               SizedBox(height: height/36),

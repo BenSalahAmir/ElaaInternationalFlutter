@@ -31,6 +31,8 @@ class _MedicaProfileState extends State<MedicaProfile> {
 
 
   String? username;
+  String? Adressemail;
+
 
 
 
@@ -44,6 +46,9 @@ class _MedicaProfileState extends State<MedicaProfile> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       username = prefs.getString('username');
+      Adressemail = prefs.getString('email');
+
+
     });
   }
   @override
@@ -58,9 +63,11 @@ class _MedicaProfileState extends State<MedicaProfile> {
             padding: EdgeInsets.symmetric(horizontal: width/26),
             child: Row(
               children: [
-                SvgPicture.asset(MedicaSvgImg.logo,height: height/26),
+                Image.asset(
+                    MedicaPngImg.logowithoutback,
+                    height: height/26),
                 SizedBox(width: width/16),
-                Text("Profile".tr,style: urbanistBold.copyWith(fontSize: 24)),
+                Text("Profil".tr,style: urbanistBold.copyWith(fontSize: 24)),
                 const Spacer(),
                 Image.asset(MedicaPngImg.moreoption,height: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black),
               ],
@@ -97,7 +104,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
               SizedBox(height: height/46,),
               Text(username ?? "Guest", style: urbanistBold.copyWith(fontSize: 19 )),
               SizedBox(height: height/96,),
-              Text("+1 111 467 378 399".tr,style: urbanistBold.copyWith(fontSize: 14)),
+              Text(Adressemail ?? "+1 111 467 378 399".tr,style: urbanistBold.copyWith(fontSize: 14)),
               SizedBox(height: height/36,),
               Divider(color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey,),
               SizedBox(height: height/46),
@@ -113,7 +120,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.profile,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                     SizedBox(width: width/26),
-                    Text("Edit_Profile".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                    Text("Modifier votre profil".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                     const Spacer(),
                     const Icon(Icons.keyboard_arrow_down,size: 20),
                   ],
@@ -151,7 +158,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.wallet,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                     SizedBox(width: width/26),
-                    Text("Payment".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                    Text("Paiement".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                     const Spacer(),
                     const Icon(Icons.arrow_forward_ios_outlined,size: 15),
                   ],
@@ -170,7 +177,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.security,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                     SizedBox(width: width/26),
-                    Text("Security".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                    Text("Sécurité".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                     const Spacer(),
                     const Icon(Icons.arrow_forward_ios_outlined,size: 15),
                   ],
@@ -187,7 +194,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.swap,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                     SizedBox(width: width/36),
-                    Text("Change_Layout".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                    Text("Changer la disposition".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                     const Spacer(),
                     const Icon(Icons.arrow_forward_ios_outlined,size: 15),
                   ],
@@ -206,9 +213,9 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.language,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                     SizedBox(width: width/26),
-                    Text("Language".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                    Text("Langue".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                     const Spacer(),
-                    Text("English (US)",style: urbanistSemiBold.copyWith(fontSize: 14)),
+                    Text("français (Fr)",style: urbanistSemiBold.copyWith(fontSize: 14)),
                     SizedBox(width: width/26),
                     const Icon(Icons.arrow_forward_ios_outlined,size: 15),
                   ],
@@ -219,7 +226,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                 children: [
                   Image.asset(MedicaPngImg.darkmode,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                   SizedBox(width: width/26),
-                  Text("Dark_Mode".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                  Text("Mode sombre".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                   const Spacer(),
                   SizedBox(
                     height: height/22,
@@ -249,7 +256,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.about,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                     SizedBox(width: width/26),
-                    Text("Help_Center".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                    Text("Centre d'aide".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                     const Spacer(),
                     const Icon(Icons.arrow_forward_ios_outlined,size: 15),
                   ],
@@ -268,7 +275,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.invitefrd,height: height/36,width: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black,),
                     SizedBox(width: width/26),
-                    Text("Invite_Friends".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
+                    Text("Inviter des amis".tr,style: urbanistSemiBold.copyWith(fontSize: 18)),
                     const Spacer(),
                     const Icon(Icons.arrow_forward_ios_outlined,size: 15),
                   ],
@@ -285,7 +292,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                   children: [
                     Image.asset(MedicaPngImg.logout,height: height/36,width: height/36),
                     SizedBox(width: width/26),
-                    Text("Logout".tr,style: urbanistSemiBold.copyWith(fontSize: 18,color: Medicacolor.red)),
+                    Text("Se déconnecter".tr,style: urbanistSemiBold.copyWith(fontSize: 18,color: Medicacolor.red)),
                   ],
                 ),
               ),
@@ -312,11 +319,11 @@ class _MedicaProfileState extends State<MedicaProfile> {
                     padding:  EdgeInsets.symmetric(horizontal: width/26,vertical: height/46),
                     child: Column(
                       children: [
-                        Text("Logout".tr,style: urbanistBold.copyWith(fontSize: 24,color: Medicacolor.red)),
+                        Text("Se déconnecter".tr,style: urbanistBold.copyWith(fontSize: 24,color: Medicacolor.red)),
                         SizedBox(height: height/96),
                         Divider(color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey,),
                         SizedBox(height: height/96),
-                        Text("Are_you_sure_you_want_to_log_out".tr,style: urbanistBold.copyWith(fontSize: 20),textAlign: TextAlign.center,),
+                        Text("Êtes-vous sûr de vouloir vous déconnecter".tr,style: urbanistBold.copyWith(fontSize: 17),textAlign: TextAlign.center,),
                         SizedBox(height: height/96),
                         Divider(color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey,),
                         // SizedBox(height: height/96),
@@ -337,7 +344,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                                   color: themedata.isdark ? Medicacolor.lblack  : Medicacolor.lightprimary,
                                   borderRadius: BorderRadius.circular(50),
                                 ),
-                                child: Center(child: Text("Cancel".tr,style: urbanistBold.copyWith(fontSize: 16,color: Medicacolor.primary),)),
+                                child: Center(child: Text("Annuler".tr,style: urbanistBold.copyWith(fontSize: 16,color: Medicacolor.primary),)),
                               ),
                             ),
                             InkWell(
@@ -359,7 +366,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                                   color: Medicacolor.primary,
                                   borderRadius: BorderRadius.circular(50),
                                 ),
-                                child: Center(child: Text("Yes_Logout".tr,style: urbanistBold.copyWith(fontSize: 16,color: Medicacolor.white),)),
+                                child: Center(child: Text("Oui Déconnexion".tr,style: urbanistBold.copyWith(fontSize: 16,color: Medicacolor.white),)),
                               ),
                             ),
                           ],
@@ -392,7 +399,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                           top: 10,
                           bottom: 10,
                         ),
-                        child: Text('select_application_layout'.tr,
+                        child: Text("sélectionner la présentation de l'application".tr,
                             style: urbanistBold.copyWith(
                               fontSize: 18,
                             )),
@@ -458,7 +465,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Cancel'.tr,
+                                'Annuler'.tr,
                                 style: urbanistMedium.copyWith(
                                   fontSize: 16,
                                 ),
