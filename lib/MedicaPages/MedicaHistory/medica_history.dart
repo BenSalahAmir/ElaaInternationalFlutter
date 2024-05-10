@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
@@ -5,9 +7,12 @@ import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medica/models/Reservation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'medica_chatting.dart';
 import 'medica_videocall.dart';
 import 'medica_voicecall.dart';
+import 'package:http/http.dart' as http;
 
 class MedicaHistory extends StatefulWidget {
   const MedicaHistory({Key? key}) : super(key: key);
@@ -39,6 +44,133 @@ class _MedicaHistoryState extends State<MedicaHistory> {
   ];
 
 
+
+  List<Reservation> reservations = [];
+
+  List chatimg1 = [
+    MedicaPngImg.articleservice,
+    MedicaPngImg.avocatservices,
+    MedicaPngImg.billetterieservices,
+    MedicaPngImg.electricienservices,
+    MedicaPngImg.Expertiseservices,
+    MedicaPngImg.labotechnicienservice,
+    MedicaPngImg.hospitalisationservice,
+    MedicaPngImg.infirmierservice,
+    MedicaPngImg.plombierservices,
+    MedicaPngImg.Rapatriementservices,
+    MedicaPngImg.Reparationservices,
+    MedicaPngImg.sanitaireservice,
+    MedicaPngImg.serrurierservices,
+    MedicaPngImg.retourDomicileservice,
+    MedicaPngImg.remorquageservice,
+    MedicaPngImg.Vitrierservices,
+    MedicaPngImg.doctor2,
+    MedicaPngImg.doctor6,
+  ];
+
+
+  List<String> serviceNames = [];
+  List<String> usernames = [];
+  List<String> reservationDateTimes = [];
+  List<String> isConfirmeds = [];
+  List<String> userConfirmations  = [];
+
+  String? Adressemail;
+
+  Map<String, String> serviceImageMap = {
+    "Infirmier": MedicaPngImg.infirmierservice,
+    "Electricien": MedicaPngImg.electricienservices,
+    "Vitrier": MedicaPngImg.Vitrierservices,
+    "Serrurier": MedicaPngImg.serrurierservices,
+    "Plomberie": MedicaPngImg.plombierservices,
+    "Reparation": MedicaPngImg.Reparationservices,
+    "Expertise": MedicaPngImg.Expertiseservices,
+    "Remorquage": MedicaPngImg.remorquageservice,
+    "Technicien de laboratoire et analyse": MedicaPngImg.labotechnicienservice,
+    "Technicien de kine": MedicaPngImg.doctor2,
+    "Second avis medical": MedicaPngImg.articleservice,
+    "Rapatriement": MedicaPngImg.Rapatriementservices,
+    "Sanitaire": MedicaPngImg.sanitaireservice,
+    "Evasan": MedicaPngImg.doctor6,
+    "Retour a domicile": MedicaPngImg.retourDomicileservice,
+    "Billetterie": MedicaPngImg.billetterieservices,
+    "Hospitalisation": MedicaPngImg.hospitalisationservice,
+    "Avocat": MedicaPngImg.avocatservices,
+  };
+
+
+  Future<void> loadUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('email');
+    String? username = prefs.getString('username');
+    print("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII ");
+
+
+
+
+
+    if (username != null) {
+      print("user name found yessssssssss " +username);
+
+      await fetchReservationsByUsername(username);
+
+    }
+    print(serviceNames.length);
+    print(serviceNames.length);
+    print(serviceNames.length);
+    print(serviceNames.length);
+    print(serviceNames.length);
+
+
+  }
+
+  Future<void> fetchReservationsByUsername(String username) async {
+    print("Fetching reservations for username: $username");
+    final url = Uri.parse('http://10.0.2.2:9097/api/reservations/getbyusername/$username');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      print("Response body: ${response.body}");
+
+      final List<dynamic> jsonResponse = json.decode(response.body);
+      print("JSON response: $jsonResponse");
+
+      serviceNames.clear(); // Clear the serviceNames list before populating it with new data
+      usernames.clear(); // Clear the usernames list before populating it with new data
+      reservationDateTimes.clear(); // Clear the reservationDateTimes list before populating it with new data
+      isConfirmeds.clear(); // Clear the isConfirmeds list before populating it with new data
+      userConfirmations.clear(); // Clear the userConfirmations list before populating it with new data
+
+      for (var reservationData in jsonResponse) {
+        serviceNames.add(reservationData['serviceName']);
+        usernames.add(reservationData['userName']);
+        reservationDateTimes.add(reservationData['reservationDateTime']);
+        isConfirmeds.add(reservationData['isConfirmed']);
+        userConfirmations.add(reservationData['userConfirmation']);
+      }
+
+      print("Service names: $serviceNames");
+      print("Usernames: $usernames");
+      print("Reservation DateTimes: $reservationDateTimes");
+      print("Is Confirmeds: $isConfirmeds");
+      print("User Confirmations: $userConfirmations");
+
+
+
+    } else {
+      print("Error: ${response.statusCode} - ${response.reasonPhrase}");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -48,225 +180,121 @@ class _MedicaHistoryState extends State<MedicaHistory> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          leadingWidth: width/1,
+          leadingWidth: width / 1,
           leading: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width/26),
-              child: Row(
-                children: [
-                  SvgPicture.asset(MedicaSvgImg.logo,height: height/26),
-                  SizedBox(width: width/16),
-                  Text("History".tr,style: urbanistBold.copyWith(fontSize: 24,color: themedata.isdark ? Medicacolor.white : Medicacolor.black)),
-                  const Spacer(),
-                  Image.asset(MedicaPngImg.search,height: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black),
-                  SizedBox(width: width/26,),
-                  InkWell(
-                      splashColor: Medicacolor.transparent,
-                      highlightColor: Medicacolor.transparent,
-                      onTap: () {
-                      },
-                      child: Image.asset(MedicaPngImg.moreoption,height: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black)),
-                ],
-              )
+            padding: EdgeInsets.symmetric(horizontal: width / 26),
+            child: Row(
+              children: [
+                SvgPicture.asset(MedicaSvgImg.logo, height: height / 26),
+                SizedBox(width: width / 16),
+                Text(
+                  "Historique".tr,
+                  style: urbanistBold.copyWith(
+                    fontSize: 24,
+                    color: themedata.isdark ? Medicacolor.white : Medicacolor.black,
+                  ),
+                ),
+                const Spacer(),
+                Image.asset(
+                  MedicaPngImg.search,
+                  height: height / 36,
+                  color: themedata.isdark ? Medicacolor.white : Medicacolor.black,
+                ),
+                SizedBox(width: width / 26),
+                InkWell(
+                  splashColor: Medicacolor.transparent,
+                  highlightColor: Medicacolor.transparent,
+                  onTap: () {},
+                  child: Image.asset(
+                    MedicaPngImg.moreoption,
+                    height: height / 36,
+                    color: themedata.isdark ? Medicacolor.white : Medicacolor.black,
+                  ),
+                ),
+              ],
+            ),
           ),
           bottom: TabBar(
             indicatorColor: Medicacolor.primary,
             dividerColor: Medicacolor.bggray,
             labelColor: Medicacolor.primary,
-            labelPadding: EdgeInsets.only(bottom: height/96),
-            indicatorPadding: EdgeInsets.symmetric(horizontal: width/26),
+            labelPadding: EdgeInsets.only(bottom: height / 96),
+            indicatorPadding: EdgeInsets.symmetric(horizontal: width / 26),
             unselectedLabelColor: Medicacolor.textgray,
-            unselectedLabelStyle:urbanistSemiBold.copyWith(fontSize: 18 ) ,
-            labelStyle: urbanistSemiBold.copyWith(fontSize: 18 ) ,
+            unselectedLabelStyle: urbanistSemiBold.copyWith(fontSize: 18),
+            labelStyle: urbanistSemiBold.copyWith(fontSize: 18),
             tabs: [
-              Text("Message".tr,),
-              Text("Voice_call".tr,),
-              Text("Video_call".tr,),
+              Text("List Reservation".tr),
+              Text("Voice_call".tr),
+              Text("Video_call".tr),
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            SingleChildScrollView(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/46),
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          splashColor: Medicacolor.transparent,
-                          highlightColor: Medicacolor.transparent,
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return const MedicaChatting();
-                            },));
-                          },
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Medicacolor.transparent,
-                                backgroundImage: AssetImage(chatimg[index].toString()),
+        body: FutureBuilder(
+          future: loadUserData(), // Call loadUserData which returns a Future
+          builder: (context, snapshot) {
+            // Check the connection state of the future
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              // Once the future is complete, build the UI with fetched data
+              return TabBarView(
+                children: [
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 46),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: serviceNames.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 3,
+                            child: ListTile(
+                              title: Text(
+                                serviceNames[index] ?? 'Service Name Missing',
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(width: width/26),
-                              Column(
+                              subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(chats[index].toString(),style: urbanistBold.copyWith(fontSize: 18)),
-                                  SizedBox(height: height/96),
-                                  Text(subtitle[index].toString(),style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
+                                  Text(
+                                    'Username: ${usernames[index] ?? 'Username Missing'}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                                  ),
+                                  Text(
+                                    'Reservation Date: ${reservationDateTimes[index] ?? 'Date Missing'}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                                  ),
+                                  Text(
+                                    'Is Confirmed: ${isConfirmeds[index] ?? 'Confirmation Status Missing'}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                                  ),
+                                  Text(
+                                    'User Confirmation: ${userConfirmations[index] ?? 'User Confirmation Missing'}',
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                                  ),
                                 ],
                               ),
-                              const Spacer(),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                    Text(date[index],style: urbanistRegular.copyWith(fontSize: 13,color: Medicacolor.textgray)),
-                                  SizedBox(height: height/96),
-                                  Text(time[index].toString(),style: urbanistMedium.copyWith(fontSize: 13,color: Medicacolor.textgray)),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      }, separatorBuilder: (context, index) {
-                    return SizedBox(height: height/36);
-                  }, itemCount: chatimg.length)
-              ),
-            ),
-            SingleChildScrollView(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/46),
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
-                              boxShadow:  [
-                                BoxShadow(
-                                  blurRadius: 5,
-                                  color: themedata.isdark ? Medicacolor.transparent : Medicacolor.lightgrey,
-                                )]
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(chatimg[index],height: height/8,width: height/8,fit: BoxFit.fitHeight,),
-                                ),
-                                SizedBox(
-                                  width: width/2.3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(chats[index],style: urbanistBold.copyWith(fontSize: 18)),
-                                      SizedBox(height: height/86),
-                                      Text("Voice_call".tr,style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                      SizedBox(height: height/76),
-                                      Text("Today | 14:00 PM",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  splashColor: Medicacolor.transparent,
-                                  highlightColor: Medicacolor.transparent,
-                                  onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                      return const MedicaVoicecall();
-                                    },));
-                                  },
-                                  child: const CircleAvatar(
-                                    radius: 28,
-                                    backgroundColor: Medicacolor.lightprimary,
-                                    child: CircleAvatar(
-                                      radius: 12,
-                                      backgroundColor: Medicacolor.primary,
-                                      child: Icon(Icons.arrow_forward_ios,size: 12,color: Medicacolor.white,),
-                                    ),
-                                  ),
-                                )
-                              ],
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return const MedicaChatting();
+                                }));
+                              },
                             ),
-                          ),
-                        );
-                      }, separatorBuilder: (context, index) {
-                    return SizedBox(height: height/36);
-                  }, itemCount: chats.length)
-              ),
-            ),
-            SingleChildScrollView(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/46),
-                  child: ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
-                              boxShadow:  [
-                                BoxShadow(
-                                  blurRadius: 5,
-                                  color: themedata.isdark ? Medicacolor.transparent : Medicacolor.lightgrey,
-                                )]
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(chatimg[index],height: height/8,width: height/8,fit: BoxFit.fitHeight,),
-                                ),
-                                SizedBox(
-                                  width: width/2.3,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(chats[index],style: urbanistBold.copyWith(fontSize: 18)),
-                                      SizedBox(height: height/86),
-                                      Text("Video_call".tr,style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                      SizedBox(height: height/76),
-                                      Text("Today | 14:00 PM",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                    ],
-                                  ),
-                                ),
-                                InkWell(
-                                  splashColor: Medicacolor.transparent,
-                                  highlightColor: Medicacolor.transparent,
-                                  onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                      return const MedicaVideocall();
-                                    },));
-                                  },
-                                  child: const CircleAvatar(
-                                    radius: 28,
-                                    backgroundColor: Medicacolor.lightprimary,
-                                    child: CircleAvatar(
-                                      radius: 12,
-                                      backgroundColor: Medicacolor.primary,
-                                      child: Icon(Icons.arrow_forward_ios,size: 12,color: Medicacolor.white,),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }, separatorBuilder: (context, index) {
-                    return SizedBox(height: height/36);
-                  }, itemCount: chats.length)
-              ),
-            ),
-          ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  SingleChildScrollView(),
+                  SingleChildScrollView(),
+                ],
+              );
+            }
+          },
         ),
       ),
     );

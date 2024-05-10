@@ -29,7 +29,7 @@ class _MedicaChattingState extends State<MedicaChatting> {
         leadingWidth: width/10,
         title: Row(
           children: [
-            Text("Dr.Drake Boeson".tr,style: urbanistBold.copyWith(fontSize: 24)),
+            Text("Service Client".tr,style: urbanistBold.copyWith(fontSize: 24)),
             const Spacer(),
             Image.asset(MedicaPngImg.search,height: height/36,color: themedata.isdark ? Medicacolor.white : Medicacolor.black),
             SizedBox(width: width/26,),
@@ -43,7 +43,7 @@ class _MedicaChattingState extends State<MedicaChatting> {
                       SizedBox(
                         width: width / 36,
                       ),
-                      Text("Clear Chat", style: urbanistSemiBold.copyWith(fontSize: 14)),
+                      Text("Effacer le chat", style: urbanistSemiBold.copyWith(fontSize: 14)),
                     ],
                   ),
                 ),
@@ -55,7 +55,7 @@ class _MedicaChattingState extends State<MedicaChatting> {
                       SizedBox(
                         width: width / 36,
                       ),
-                      Text("Export Chat", style: urbanistSemiBold.copyWith(fontSize: 14)),
+                      Text("Exporter la discussion", style: urbanistSemiBold.copyWith(fontSize: 14)),
                     ],
                   ),
                 ),
@@ -67,7 +67,7 @@ class _MedicaChattingState extends State<MedicaChatting> {
                       SizedBox(
                         width: width / 36,
                       ),
-                      Text("Delete Chat", style: urbanistSemiBold.copyWith(fontSize: 14,color: Medicacolor.red)),
+                      Text("Supprimer le chat", style: urbanistSemiBold.copyWith(fontSize: 14,color: Medicacolor.red)),
                     ],
                   ),
                 ),
@@ -99,7 +99,7 @@ class _MedicaChattingState extends State<MedicaChatting> {
                   borderRadius: BorderRadius.circular(6),
                   color: themedata.isdark?Medicacolor.lightblack:Medicacolor.container,
                 ),
-                child: Center(child: Text("Today",style: urbanistSemiBold.copyWith(fontSize: 10,color: Medicacolor.textgray))),
+                child: Center(child: Text("Aujourd'hui",style: urbanistSemiBold.copyWith(fontSize: 10,color: Medicacolor.textgray))),
               ),
               SizedBox(height: height/36,),
               Row(
@@ -122,43 +122,13 @@ class _MedicaChattingState extends State<MedicaChatting> {
                             children: [
                               SizedBox(
                                 width: width/2,
-                                child: Text("Hello,Good morning too Andrew😀",
+                                child: Text("Votre réservation a bien été enregistrée. Notre équipe du service client s'occupera aprés quelque minutes de votre demande. Merci de votre confiance 😀",
                                   style: urbanistMedium.copyWith(fontSize: 16),),
                               ),
-                              Text("09:41",style: urbanistMedium.copyWith(fontSize: 12,color: Medicacolor.textgray)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: height/56,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    width: width/1.5,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color:themedata.isdark?Medicacolor.lightblack:Medicacolor.container,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width/26,vertical: height/66),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                width: width/2,
-                                child: Text("Can you tell me the problem you are having? So that i can identify it.",
-                                  style: urbanistMedium.copyWith(fontSize: 16),),
+                              Text(
+                                '${DateTime.now().hour}:${DateTime.now().minute}',
+                                style: urbanistMedium.copyWith(fontSize: 12, color: Medicacolor.textgray),
                               ),
-                              Text("09:42",style: urbanistMedium.copyWith(fontSize: 12,color: Medicacolor.textgray)),
                             ],
                           ),
                         ],
@@ -167,95 +137,8 @@ class _MedicaChattingState extends State<MedicaChatting> {
                   ),
                 ],
               ),
-              SizedBox(height: height/36,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: width/1.5,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Medicacolor.primary
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width/26,vertical: height/66),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: width/2,
-                            child: Text("Hello, thank you for contacting me. I am problem with my immune system😶",
-                              style: urbanistMedium.copyWith(fontSize: 16,color: Medicacolor.white),),
-                          ),
-                          Text("09:41",style: urbanistMedium.copyWith(fontSize: 12,color: Medicacolor.white)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: height/36,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: width/1.5,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Medicacolor.primary
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width/26,vertical: height/66),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SizedBox(
-                            width: width/2,
-                            child: Text("I will definitely come on time and give my best",
-                              style: urbanistMedium.copyWith(fontSize: 16,color: Medicacolor.white),),
-                          ),
-                          Text("09:41",style: urbanistMedium.copyWith(fontSize: 12,color: Medicacolor.white)),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: height/36,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: width/1.5,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: Medicacolor.primary
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width/26,vertical: height/66),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                width: width/2,
-                                child: Text("I attach my portfolio for you to look back 😄",
-                                  style: urbanistMedium.copyWith(fontSize: 16,color: Medicacolor.white),),
-                              ),
-                              Text("09:42",style: urbanistMedium.copyWith(fontSize: 12,color: Medicacolor.white)),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+
+
             ],
           ),
         ),
@@ -283,7 +166,7 @@ class _MedicaChattingState extends State<MedicaChatting> {
                     ),
                    fillColor: themedata.isdark?Medicacolor.darkblack:Medicacolor.container,
                     filled: true,
-                    hintText: "Type a message ...".tr,
+                    hintText: "Tapez un message ...".tr,
                     hintStyle: urbanistRegular.copyWith(fontSize: 14,color: Medicacolor.textgray),
                     border: const OutlineInputBorder(),
                     enabledBorder:  OutlineInputBorder(

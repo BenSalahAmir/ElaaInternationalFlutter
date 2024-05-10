@@ -9,6 +9,7 @@ import 'package:medica/MedicaGlobal/medica_images.dart';
 import 'package:medica/MedicaPages/MedicaAppointment/medica_appointmentdetails.dart';
 import 'package:medica/MedicaPages/MedicaAppointment/medica_cancelappoinment.dart';
 import 'package:medica/MedicaPages/MedicaAppointment/medica_reschedule.dart';
+import 'package:medica/MedicaPages/MedicaHistory/medica_chatting.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -152,56 +153,98 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     }
   }
 
+  void goToChat() async {
+    await Future.delayed(const Duration(seconds: 1));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const MedicaChatting()),
+    );
+  }
 
-  Future<void> createReservation(Reservation reservation) async {
+
+  Future<void> createReservation(BuildContext context, Reservation reservation) async {
     try {
-      final url = Uri.parse('http://10.0.2.2:9097/api/reservations/add');
-      final response = await http.post(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
+      // Show confirmation dialog
+      bool confirmReservation = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirmation'),
+            content: Text('Do you want to reserve this service?'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true); // User confirmed reservation
+                },
+                child: Text('Yes'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); // User canceled reservation
+                },
+                child: Text('No'),
+              ),
+            ],
+          );
         },
-        body: jsonEncode(reservation.toJson()),
       );
 
-      if (response.statusCode == 200) {
-        // Show success alert
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Succès'),
-              content: Text('Réservation créée avec succès.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
+      // Check user's choice
+      if (confirmReservation == true) {
+        // User confirmed, proceed with reservation
+        final url = Uri.parse('http://10.0.2.2:9097/api/reservations/add');
+        final response = await http.post(
+          url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
           },
+          body: jsonEncode(reservation.toJson()),
         );
+
+        if (response.statusCode == 200) {
+          // Show success alert
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Success'),
+                content: Text('Reservation created successfully.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      goToChat(); // Call gotochat() method
+
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+
+        } else {
+          // Show error alert
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Error'),
+                content: Text('Failed to create reservation.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       } else {
-        // Show error alert
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Erreur'),
-              content: Text('Échec de la création de la réservation.'),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'),
-                ),
-              ],
-            );
-          },
-        );
+        // User canceled reservation
       }
     } catch (e) {
       // Handle exceptions
@@ -209,8 +252,8 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Erreur'),
-            content: Text("Une erreur s'est produite: $e"),
+            title: Text('Error'),
+            content: Text("An error occurred: $e"),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -427,7 +470,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                             reservationDateTime: DateTime.now(), // You need to set this according to your logic
                                             isConfirmed: false,
                                           );
-                                          createReservation(reservation); // Call the createReservation method
+                                          createReservation(context, reservation);
                                         },
                                         child: Container(
                                           height: height / 22,
@@ -582,7 +625,8 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                     ],
                   )
               ),
-            ),            SingleChildScrollView(
+            ),
+            SingleChildScrollView(
               child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
                   child: Column(

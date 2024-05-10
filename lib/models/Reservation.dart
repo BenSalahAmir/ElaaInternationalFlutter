@@ -22,4 +22,13 @@ class Reservation {
       'isConfirmed': isConfirmed,
     };
   }
+  factory Reservation.fromJson(Map<String, dynamic> json) {
+    return Reservation(
+      serviceName: json['serviceName'],
+      userName: json['userName'],
+      userConfirmation: json['userConfirmation'],
+      reservationDateTime: DateTime.parse(json['reservationDateTime']),
+      isConfirmed: json['isConfirmed'],
+    );
+  }
 }
