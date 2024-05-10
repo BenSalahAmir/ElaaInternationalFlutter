@@ -224,9 +224,9 @@ class _MedicaHistoryState extends State<MedicaHistory> {
             unselectedLabelStyle: urbanistSemiBold.copyWith(fontSize: 18),
             labelStyle: urbanistSemiBold.copyWith(fontSize: 18),
             tabs: [
-              Text("List Reservation".tr),
-              Text("Voice_call".tr),
-              Text("Video_call".tr),
+              Text("Votre Reservations".tr),
+              Text("Historique".tr),
+              Text("Historique2".tr),
             ],
           ),
         ),
@@ -245,52 +245,183 @@ class _MedicaHistoryState extends State<MedicaHistory> {
                   SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 46),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: serviceNames.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            elevation: 3,
-                            child: ListTile(
-                              title: Text(
-                                serviceNames[index] ?? 'Service Name Missing',
-                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Username: ${usernames[index] ?? 'Username Missing'}',
-                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: serviceNames.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 3,
+                                child: ListTile(
+                                  title: Text(
+                                    serviceNames[index] ?? 'Service Name Missing',
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                   ),
-                                  Text(
-                                    'Reservation Date: ${reservationDateTimes[index] ?? 'Date Missing'}',
-                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Username: ${usernames[index] ?? 'Username Missing'}',
+                                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                                      ),
+                                      Text(
+                                        'Reservation Date: ${reservationDateTimes[index] ?? 'Date Missing'}',
+                                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                                      ),
+                                      Text(
+                                        'Is Confirmed: ${isConfirmeds[index] ?? 'Confirmation Status Missing'}',
+                                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                                      ),
+                                      Text(
+                                        'User Confirmation: ${userConfirmations[index] ?? 'User Confirmation Missing'}',
+                                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    'Is Confirmed: ${isConfirmeds[index] ?? 'Confirmation Status Missing'}',
-                                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                                  ),
-                                  Text(
-                                    'User Confirmation: ${userConfirmations[index] ?? 'User Confirmation Missing'}',
-                                    style: TextStyle(fontSize: 14, color: Colors.grey),
-                                  ),
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return const MedicaChatting();
-                                }));
-                              },
-                            ),
-                          );
-                        },
+                                  onTap: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      return const MedicaChatting();
+                                    }));
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  SingleChildScrollView(),
-                  SingleChildScrollView(),
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width/36, vertical: height/46),
+                      child: ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            String serviceImage = serviceImageMap[serviceNames[index]] ?? MedicaPngImg.defaultImage;
+
+                            return Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
+                                  boxShadow:  [
+                                    BoxShadow(
+                                      blurRadius: 5,
+                                      color: themedata.isdark ? Medicacolor.transparent : Medicacolor.lightgrey,
+                                    )
+                                  ]
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: width/36, vertical: height/66),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Image.asset(serviceImage, height: height/8, width: height/8, fit: BoxFit.fitHeight,),
+                                    ),
+                                    SizedBox(
+                                      width: width/2.3,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(serviceNames[index], style: urbanistBold.copyWith(fontSize: 18)),
+                                          SizedBox(height: height/86),
+                                          Text("confirmé par ${userConfirmations[index]}", style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)),
+                                          SizedBox(height: height/76),
+                                          Text(reservationDateTimes[index], style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)),
+                                        ],
+                                      ),
+                                    ),
+
+                                    InkWell(
+                                      splashColor: Medicacolor.transparent,
+                                      highlightColor: Medicacolor.transparent,
+                                      onTap: () {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                          return const MedicaVoicecall();
+                                        },));
+                                      },
+                                      child: Text(
+                                        isConfirmeds[index] ?? 'Confirmation Status Missing',
+                                        style: urbanistMedium.copyWith(
+                                          fontSize: 11,
+                                          color: isConfirmeds[index] == 'Confirmed' ? Colors.green : Colors.red,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return SizedBox(height: height/36);
+                          },
+                          itemCount: serviceNames.length
+                      ),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width/36, vertical: height/46),
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          String serviceImage = serviceImageMap[serviceNames[index]] ?? MedicaPngImg.defaultImage;
+                          return InkWell(
+                            splashColor: Medicacolor.transparent,
+                            highlightColor: Medicacolor.transparent,
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return const MedicaChatting();
+                              },));
+                            },
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 25,
+                                  backgroundColor: Medicacolor.transparent,
+                                  backgroundImage: AssetImage(serviceImage),
+                                ),
+                                SizedBox(width: width/26),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(serviceNames[index], style: urbanistBold.copyWith(fontSize: 18)), // Use usernames instead of chats
+                                    SizedBox(height: height/96),
+                                    Text("confirmé par ${userConfirmations[index]}", style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)), // Use userConfirmations instead of subtitle
+                                  ],
+                                ),
+                                const Spacer(),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(reservationDateTimes[index], style: urbanistRegular.copyWith(fontSize: 13, color: Medicacolor.textgray)), // Use reservationDateTimes instead of date
+                                    SizedBox(height: height/96),
+                                    Text(
+                                      isConfirmeds[index] ?? 'Confirmation Status Missing',
+                                      style: urbanistMedium.copyWith(
+                                        fontSize: 13,
+                                        color: isConfirmeds[index] == 'Confirmed' ? Colors.green : Colors.red,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return SizedBox(height: height/36);
+                        },
+                        itemCount: serviceNames.length,
+                      ),
+                    ),
+                  ),
                 ],
               );
             }
