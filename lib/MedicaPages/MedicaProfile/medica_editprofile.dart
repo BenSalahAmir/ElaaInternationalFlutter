@@ -397,7 +397,7 @@ class _MedicaEditprofileState extends State<MedicaEditprofile> {
                     style: urbanistBold.copyWith(fontSize: 24, color: Medicacolor.primary),
                     textAlign: TextAlign.center),
                 SizedBox(height: height / 86),
-                Text("Votre compte est prêt à être utilisé Vous serez redirigé vers la page de connexion dans quelques secondes".tr,
+                Text("profil modifier avec Sucess".tr,
                     style: urbanistRegular.copyWith(fontSize: 16), textAlign: TextAlign.center),
                 SizedBox(height: height / 46),
                 Image.asset(MedicaPngImg.circular, height: height / 20),

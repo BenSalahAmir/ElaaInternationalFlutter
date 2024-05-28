@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -85,37 +86,43 @@ class _MedicaLoginState extends State<MedicaLogin> {
   Future<void> _authenticateUser() async {
     final String apiUrl = 'http://10.0.2.2:9098/api/auth/signin';
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'username': emailController.text,
-        'password': passwordController.text,
-      }),
-    );
-    if (response.statusCode == 200) {
-      // Successfully authenticated
-      Map<String, dynamic> data = jsonDecode(response.body);
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: json.encode({
+          'username': emailController.text,
+          'password': passwordController.text,
+        }),
+      );
 
-      // Save user data to local storage
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('userId', data['id']);
-      prefs.setString('username', data['username']);
-      prefs.setString('email', data['email']);
+      if (response.statusCode == 200) {
+        // Successfully authenticated
+        Map<String, dynamic> data = json.decode(response.body);
 
+        // Save user data to local storage
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('userId', data['id']);
+        prefs.setString('username', data['username']);
+        prefs.setString('email', data['email']);
 
-      // Navigate to home page
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const MedicaDashboard(),
-        ),
-      );} else {
-      // Failed to authenticate
-      print("Échec de l'authentification");
-      await _showDialog('Erreur', "Échec de l'authentification. Veuillez vérifier vos informations d'identification.");
+        // Navigate to home page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MedicaDashboard(),
+          ),
+        );
+      } else {
+        // Failed to authenticate
+        print("Échec de l'authentification");
+        await _showDialog('Erreur', "Échec de l'authentification. Veuillez vérifier vos informations d'identification.");
+      }
+    } catch (error) {
+      print('Error: $error');
+      // Handle error
     }
   }
 
@@ -125,7 +132,10 @@ class _MedicaLoginState extends State<MedicaLogin> {
     height = size.height;
     width = size.width;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,  // This removes the back icon
+
+      ),
      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(

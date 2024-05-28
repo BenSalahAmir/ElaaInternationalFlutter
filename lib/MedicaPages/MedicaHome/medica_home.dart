@@ -73,29 +73,29 @@ class _MedicaHomeState extends State<MedicaHome> {
                   SizedBox(height: height/120,),
                   Text("Bonjour 👋".tr,style: urbanistRegular.copyWith(fontSize: 16 )),
                   SizedBox(height: height/120,),
-                  Text(username ?? "Guest", style: urbanistBold.copyWith(fontSize: 19 )),
+                  Text(username ?? "Guest", style: urbanistBold.copyWith(fontSize: 16 )),
                 ],
               ),
               const Spacer(),
               InkWell(
                 splashColor: Medicacolor.transparent,
                 highlightColor: Medicacolor.transparent,
-                onTap: () {
+                /*onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const MedicaNotification();
                   },));
-                },
+                },*/
                 child: Image.asset(MedicaPngImg.notification,height: height/36,color: themedata.isdark?Medicacolor.white:Medicacolor.black,),
               ),
               SizedBox(width: width/16),
               InkWell(
                 splashColor: Medicacolor.transparent,
                 highlightColor: Medicacolor.transparent,
-                onTap: () {
+               /* onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const MedicaFavourite();
                   },));
-                },
+                },*/
                 child: Image.asset(MedicaPngImg.wishlist,height: height/30,color: themedata.isdark?Medicacolor.white:Medicacolor.black,),
               ),
             ],
@@ -111,11 +111,12 @@ class _MedicaHomeState extends State<MedicaHome> {
               InkWell(
                 splashColor: Medicacolor.transparent,
                 highlightColor: Medicacolor.transparent,
+                /*
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return const MedicaSearch();
                   },));
-                },
+                },*/
                 child: Container(
                   height: height/15,
                   width: width/1,
@@ -153,23 +154,23 @@ class _MedicaHomeState extends State<MedicaHome> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Couverture sécurisée!".tr,style: urbanistBold.copyWith(fontSize: 20,color: Medicacolor.white)),
+                          Text("Passion for the best".tr,style: urbanistBold.copyWith(fontSize: 20,color: Medicacolor.white)),
                           SizedBox(height: height/96),
                           SizedBox(
                             width: width/1.7,
-                            child: Text("Votre solution complète de gestion des assurances. Avec Elaa International, restez maître de vos polices d’assurance sans effort.",
+                            child: Text("Elaa International vous propose une solution complete des prestations de services Technique Domiciliare Medical et voyage. Cette application vous permet un acces direct à nos services.",
                               style: urbanistLight.copyWith(fontSize: 11,color: Medicacolor.white)),
                           ),
                           SizedBox(height: height/56),
-                          Container(
-                            height: height/25,
+                         /* Container(
+                            height: height/29,
                             width: width/3,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
+                              borderRadius: BorderRadius.circular(22),
                               color: Medicacolor.white,
                             ),
-                            child: Center(child: Text("Vérifie maintenant",style: urbanistSemiBold.copyWith(fontSize: 13,color: Medicacolor.primary),)),
-                          ),
+                            child: Center(child: Text("Vérifie maintenant",style: urbanistSemiBold.copyWith(fontSize: 6,color: Medicacolor.primary),)),
+                          ),*/
                         ],
                       ),
                     ),
@@ -223,15 +224,16 @@ class _MedicaHomeState extends State<MedicaHome> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Meilleur type d'assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
+                  Text("Type des prestations".tr,style: urbanistBold.copyWith(fontSize: 20)),
                   InkWell(
                     splashColor: Medicacolor.transparent,
                     highlightColor: Medicacolor.transparent,
+                      /*
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
                           return const MedicaTopdoctor();
                         },));
-                      },
+                      },*/
                       child: Text("Voir tout".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary))),
                 ],
               ),
@@ -282,76 +284,6 @@ class _MedicaHomeState extends State<MedicaHome> {
                     itemCount: category.length),
               ),
               SizedBox(height: height/36),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: doctorname.length,
-                itemBuilder: (context, index) {
-                return InkWell(
-                  splashColor: Medicacolor.transparent,
-                  highlightColor: Medicacolor.transparent,
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return const MedicaDoctorDetails();
-                    },));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: height/36),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                        color: themedata.isdark ? Medicacolor.darkblack :  Medicacolor.white,
-                        boxShadow:  [
-                          BoxShadow(
-                            blurRadius: 5,
-                            color: themedata.isdark ? Medicacolor.transparent : Medicacolor.lightgrey,
-                          )]
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/66),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.asset(doctorimg[index].toString(),height: height/8,width: height/8,fit: BoxFit.fill,),
-                          ),
-                          SizedBox(
-                            width: width/1.7,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(doctorname[index].toString(),style: urbanistBold.copyWith(fontSize: 18)),
-                                    Image.asset(MedicaPngImg.wishlist,height: height/36,color: Medicacolor.primary,),
-                                  ],
-                                ),
-                                SizedBox(height: height/86),
-                                Container(
-                                  height: height/500,
-                                  width: width/1.5,
-                                  color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey,
-                                ),
-                                SizedBox(height: height/86),
-                                Text("Cardilogists  |  Alka Hospital",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                SizedBox(height: height/76),
-                                Row(
-                                  children: [
-                                    const Icon(Icons.star_rate_rounded,size: 15,color: Medicacolor.primary),
-                                    SizedBox(width: width/96),
-                                    Text("4.3 (5.376 reviews)",style: urbanistMedium.copyWith(fontSize: 14,color: Medicacolor.textgray)),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },)
             ],
           ),
         ),

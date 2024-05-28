@@ -122,7 +122,7 @@ class _MedicaChattingState extends State<MedicaChatting> {
                             children: [
                               SizedBox(
                                 width: width/2,
-                                child: Text("Votre réservation a bien été enregistrée. Notre équipe du service client s'occupera aprés quelque minutes de votre demande. Merci de votre confiance 😀",
+                                child: Text("Votre réservation a bien été enregistrée. Notre équipe prendra en charge votre demande et vous répondra dans les plus brefs délais. Merci pour votre confiance ",
                                   style: urbanistMedium.copyWith(fontSize: 16),),
                               ),
                               Text(

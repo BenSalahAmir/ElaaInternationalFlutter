@@ -5,6 +5,7 @@ import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
 import 'package:medica/MedicaPages/MedicaAuthentication/medica_login.dart';
+import 'package:medica/MedicaPages/MedicaHome/medica_notification.dart';
 import 'package:medica/MedicaPages/MedicaProfile/medica_helpcenter.dart';
 import 'package:medica/MedicaPages/MedicaProfile/medica_invitefriends.dart';
 import 'package:medica/MedicaPages/MedicaProfile/medica_language.dart';
@@ -132,7 +133,7 @@ class _MedicaProfileState extends State<MedicaProfile> {
                 highlightColor: Medicacolor.transparent,
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const MedicaProfileNotification();
+                    return const MedicaNotification();
                   },));
                 },
                 child: Row(

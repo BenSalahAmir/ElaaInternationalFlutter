@@ -45,7 +45,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
             ),
             const Spacer(),
             Text(
-              "Bienvenue sur Elaa International".tr,
+              "Elaa International vous souhaite la bienvenue".tr,
               style: urbanistBold.copyWith(fontSize: 35,color: themedata.isdark ? Medicacolor.white :  Medicacolor.primary),
               textAlign: TextAlign.center,
             ),
@@ -83,7 +83,7 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
             ),
             const Spacer(),
             Text(
-              "Simplifiez votre parcours d'assurance avec Elaa International".tr,
+              "Elaa International vous offre plusieurs prestations".tr,
               style: urbanistBold.copyWith(fontSize: 35,color: themedata.isdark ? Medicacolor.white :  Medicacolor.primary),
               textAlign: TextAlign.center,
             ),
@@ -121,8 +121,8 @@ class _MedicaOnboardingState extends State<MedicaOnboarding> {
             ),
             const Spacer(),
             Text(
-              "Commençons à vivre avec nous dès maintenant".tr,
-              style: urbanistBold.copyWith(fontSize: 35,color: themedata.isdark ? Medicacolor.white : Medicacolor.primary),
+              "Profiter de cette application pour une reservation de prestation en ligne".tr,
+              style: urbanistBold.copyWith(fontSize: 33,color: themedata.isdark ? Medicacolor.white : Medicacolor.primary),
               textAlign: TextAlign.center,
             ),
             const Spacer(),

@@ -46,7 +46,7 @@ class _MedicaWelcomeState extends State<MedicaWelcome> {
           SizedBox(height: height/16),
           Text("Welcome to Elaa International".tr,style: urbanistBold.copyWith(fontSize: 48,color: Medicacolor.primary),textAlign: TextAlign.center),
           SizedBox(height: height/46),
-          Text("Un Seul interlocuteur plusieurs services".tr,
+          Text("Un Seul interlocuteur pour plusieurs services".tr,
               style: urbanistMedium.copyWith(fontSize: 18),textAlign: TextAlign.center),
         ],
       ),

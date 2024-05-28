@@ -119,6 +119,9 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   String? email;
   String? username;
 
+  bool _isLoading = false;
+
+
   @override
   void initState() {
     super.initState();
@@ -140,7 +143,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   }
 
   Future<void> fetchServices1() async {
-    final url = Uri.parse('http://10.0.2.2:9091/api/services');
+    final url = Uri.parse('http://10.0.2.2:9098/api/services');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -162,37 +165,48 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   }
 
 
-  Future<void> createReservation(BuildContext context, Reservation reservation) async {
+  Future<void> createReservation(BuildContext context, Reservation reservation, Function(bool) callback) async {
     try {
+      setState(() {
+        _isLoading = true; // Set loading state
+      });
+
       // Show confirmation dialog
       bool confirmReservation = await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Confirmation'),
-            content: Text('Do you want to reserve this service?'),
+            content: Text('Voulez-vous réserver ce service?'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(true); // User confirmed reservation
                 },
-                child: Text('Yes'),
+                child: Text('Oui'),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(false); // User canceled reservation
                 },
-                child: Text('No'),
+                child: Text('Non'),
               ),
             ],
           );
         },
       );
 
+      // Reset loading state
+      setState(() {
+        _isLoading = false;
+      });
+
       // Check user's choice
       if (confirmReservation == true) {
+      //  alertSuccess();
+
         // User confirmed, proceed with reservation
-        final url = Uri.parse('http://10.0.2.2:9097/api/reservations/add');
+        final url = Uri.parse('http://10.0.2.2:9098/api/reservations/add');
         final response = await http.post(
           url,
           headers: <String, String>{
@@ -201,20 +215,22 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
           body: jsonEncode(reservation.toJson()),
         );
 
+
         if (response.statusCode == 200) {
+
           // Show success alert
           showDialog(
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('Success'),
-                content: Text('Reservation created successfully.'),
+                content: Text("Réservation créée avec succès."),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                       goToChat(); // Call gotochat() method
-
+                      callback(true); // Call the callback function
                     },
                     child: Text('OK'),
                   ),
@@ -222,7 +238,6 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
               );
             },
           );
-
         } else {
           // Show error alert
           showDialog(
@@ -235,6 +250,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
+                      callback(false); // Call the callback function
                     },
                     child: Text('OK'),
                   ),
@@ -258,6 +274,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  callback(false); // Call the callback function
                 },
                 child: Text('OK'),
               ),
@@ -268,8 +285,49 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     }
   }
 
+  alertSuccess() async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(52)),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width / 46, vertical: height / 46),
+              child: Column(
+                children: [
+                  Image.asset(MedicaPngImg.signinsuccess, height: height / 6, fit: BoxFit.fill),
+                  SizedBox(height: height / 36),
+                  Text("Toutes nos félicitations".tr,
+                      style: urbanistBold.copyWith(fontSize: 24, color: Medicacolor.primary),
+                      textAlign: TextAlign.center),
+                  SizedBox(height: height / 86),
+                  Text("Votre Reservation a été envoyée avec succès".tr,
+                      style: urbanistRegular.copyWith(fontSize: 16), textAlign: TextAlign.center),
+                  SizedBox(height: height / 46),
+                  Image.asset(MedicaPngImg.circular, height: height / 20),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
+
+    // Delay for 5 seconds before automatically closing the dialog
+    await Future.delayed(Duration(seconds: 5));
+
+    // Close the dialog
+    Navigator.pop(context);
+  }
+
   Future<void> getallServices() async {
-    final url = Uri.parse('http://10.0.2.2:9091/api/services');
+    setState(() {
+      _isLoading = true;
+    });
+    final url = Uri.parse('http://10.0.2.2:9098/api/services');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -280,6 +338,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     } else {
       throw Exception('Failed to load services');
     }
+
   }
 
 
@@ -287,7 +346,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
 
 
   Future<void> fetchServices(String email) async {
-    final url = Uri.parse('http://10.0.2.2:9091/api/services/test/$email');
+    final url = Uri.parse('http://10.0.2.2:9098/api/services/test/$email');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -346,9 +405,8 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
             unselectedLabelStyle:urbanistSemiBold.copyWith(fontSize: 18 ) ,
             labelStyle: urbanistSemiBold.copyWith(fontSize: 18 ) ,
             tabs: [
-              Text("Votre Service".tr,),
+              Text("service autorisé".tr,),
               Text("tous les services".tr,),
-              Text("Cancelled".tr,),
             ],
           ),
         ),
@@ -359,21 +417,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                   padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
                   child: Column(
                     children: [
-                      // Padding(
-                      //   padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/10),
-                      //   child: Column(
-                      //     crossAxisAlignment: CrossAxisAlignment.center,
-                      //     mainAxisAlignment: MainAxisAlignment.center,
-                      //     children: [
-                      //       Image.asset(MedicaPngImg.empty,height: height/3.5,fit: BoxFit.fitHeight,),
-                      //       SizedBox(height: height/16,),
-                      //       Text("You_dont_have_an_appointment_yet".tr,style: urbanistSemiBold.copyWith(fontSize: 18),),
-                      //       SizedBox(height: height/46,),
-                      //       Text("You_dont_have_a_doctor_appointment_scheduled_at_the_moment".tr,style: urbanistRegular.copyWith(fontSize: 16,color: Medicacolor.textgray ),textAlign: TextAlign.center,),
-                      //
-                      //     ],
-                      //   ),
-                      // )
+
                       ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -461,7 +505,6 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                         splashColor: Medicacolor.transparent,
                                         highlightColor: Medicacolor.transparent,
                                         onTap: () {
-                                          // Assuming `userName` and `serviceNames` are accessible in this scope
                                           String selectedService = serviceNames[index]; // Get the selected service name from the index
                                           Reservation reservation = Reservation(
                                             serviceName: selectedService,
@@ -470,7 +513,11 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                             reservationDateTime: DateTime.now(), // You need to set this according to your logic
                                             isConfirmed: false,
                                           );
-                                          createReservation(context, reservation);
+                                          createReservation(context, reservation, (bool success) {
+                                            setState(() {
+                                              _isLoading = false; // Stop loading state
+                                            });
+                                          });
                                         },
                                         child: Container(
                                           height: height / 22,
@@ -480,7 +527,9 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                             color: Medicacolor.primary,
                                           ),
                                           child: Center(
-                                            child: Text(
+
+                                            child:
+                                            Text(
                                               "Réserver le service".tr,
                                               style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.white),
                                             ),
@@ -626,31 +675,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                   )
               ),
             ),
-            SingleChildScrollView(
-              child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/36),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: width/36,vertical: height/10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(MedicaPngImg.empty,height: height/3.5,fit: BoxFit.fitHeight,),
-                            SizedBox(height: height/16,),
-                            Text("You_dont_have_an_appointment_yet".tr,style: urbanistSemiBold.copyWith(fontSize: 18),),
-                            SizedBox(height: height/46,),
-                            Text("You_dont_have_a_doctor_appointment_scheduled_at_the_moment".tr,style: urbanistRegular.copyWith(fontSize: 16,color: Medicacolor.textgray ),textAlign: TextAlign.center,),
 
-                          ],
-                        ),
-                      )
-
-                    ],
-                  )
-              ),
-            ),
           ],
         ),
       ),
@@ -659,77 +684,15 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   
   
   
-  cancelappintment() {
-    showModalBottomSheet(
-        backgroundColor: Medicacolor.transparent,
-        context: context,
-        builder: (BuildContext context) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: themedata.isdark ? Medicacolor.darkblack : Medicacolor.white,
-                    borderRadius: const BorderRadius.only(topRight: Radius.circular(30),topLeft: Radius.circular(30)),
-                  ),
-                  height: height / 3,
-                  child: Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: width/26,vertical: height/46),
-                    child: Column(
-                      children: [
-                        Text("Cancel_Appointment".tr,style: urbanistBold.copyWith(fontSize: 20,color: Medicacolor.red)),
-                        SizedBox(height: height/96),
-                        Divider(color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey,),
-                        SizedBox(height: height/96),
-                        Text("Are_you_sure_you_want_to_cancel_your_appointment".tr,style: urbanistMedium.copyWith(fontSize: 16),textAlign: TextAlign.center,),
-                        SizedBox(height: height/96),
-                        Text("Only_50_of_the_funds_will_be_returned_to_your_account".tr,style: urbanistMedium.copyWith(fontSize: 16),textAlign: TextAlign.center,),
-                        SizedBox(height: height/96),
-                        Divider(color: themedata.isdark ? Medicacolor.lightblack : Medicacolor.lightgrey,),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              splashColor: Medicacolor.transparent,
-                              highlightColor: Medicacolor.transparent,
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              child: Container(
-                                height: height/16,
-                                width: width/2.3,
-                                decoration: BoxDecoration(
-                                  color: themedata.isdark ? Medicacolor.lblack  : Medicacolor.lightprimary,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Center(child: Text("Back".tr,style: urbanistBold.copyWith(fontSize: 16,color: Medicacolor.primary),)),
-                              ),
-                            ),
-                            InkWell(
-                              splashColor: Medicacolor.transparent,
-                              highlightColor: Medicacolor.transparent,
-                              onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return const MedicaCancelAppoinment();
-                                },));
-                              },
-                              child: Container(
-                                height: height/16,
-                                width: width/2.2,
-                                decoration: BoxDecoration(
-                                  color: Medicacolor.primary,
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: Center(child: Text("Yes_Cancel".tr,style: urbanistBold.copyWith(fontSize: 16,color: Medicacolor.white),)),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              });
-        });
-  }
+
+
+
+
+
+
+
+
+
+
+
 }

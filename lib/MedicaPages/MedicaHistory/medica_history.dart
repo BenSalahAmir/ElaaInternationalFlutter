@@ -97,36 +97,56 @@ class _MedicaHistoryState extends State<MedicaHistory> {
     "Hospitalisation": MedicaPngImg.hospitalisationservice,
     "Avocat": MedicaPngImg.avocatservices,
   };
+  String _result = '';
 
+
+  @override
+  void initState() {
+    super.initState();
+    loadUserData();
+
+
+  }
 
   Future<void> loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString('email');
     String? username = prefs.getString('username');
-    print("HIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII ");
 
 
-
+      if (email != null){
+        _result= await getNombreDeclarations(email);
+        }
 
 
     if (username != null) {
-      print("user name found yessssssssss " +username);
 
       await fetchReservationsByUsername(username);
 
     }
-    print(serviceNames.length);
-    print(serviceNames.length);
-    print(serviceNames.length);
-    print(serviceNames.length);
-    print(serviceNames.length);
+
 
 
   }
 
+  Future<String> getNombreDeclarations(String email) async {
+    final url = Uri.parse('http://10.0.2.2:9098/api/reservations/nombre-declarations?email=$email');
+    //print("emailllllllllllllllllllllllll "+email);
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return response.body; // The server returned a 200 OK response
+    } else if (response.statusCode == 404) {
+      return "Email not found"; // The server returned a 404 Not Found response
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+
   Future<void> fetchReservationsByUsername(String username) async {
     print("Fetching reservations for username: $username");
-    final url = Uri.parse('http://10.0.2.2:9097/api/reservations/getbyusername/$username');
+    final url = Uri.parse('http://10.0.2.2:9098/api/reservations/getbyusername/$username');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -154,6 +174,7 @@ class _MedicaHistoryState extends State<MedicaHistory> {
       print("Reservation DateTimes: $reservationDateTimes");
       print("Is Confirmeds: $isConfirmeds");
       print("User Confirmations: $userConfirmations");
+      print("resultatttttttttt"+_result);
 
 
 
@@ -162,13 +183,7 @@ class _MedicaHistoryState extends State<MedicaHistory> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    loadUserData();
 
-
-  }
 
 
   @override
@@ -185,7 +200,9 @@ class _MedicaHistoryState extends State<MedicaHistory> {
             padding: EdgeInsets.symmetric(horizontal: width / 26),
             child: Row(
               children: [
-                SvgPicture.asset(MedicaSvgImg.logo, height: height / 26),
+                Image.asset(
+                    MedicaPngImg.logowithoutback,
+                    height: height/26),
                 SizedBox(width: width / 16),
                 Text(
                   "Historique".tr,
@@ -224,9 +241,7 @@ class _MedicaHistoryState extends State<MedicaHistory> {
             unselectedLabelStyle: urbanistSemiBold.copyWith(fontSize: 18),
             labelStyle: urbanistSemiBold.copyWith(fontSize: 18),
             tabs: [
-              Text("Votre Reservations".tr),
               Text("Historique".tr),
-              Text("Historique2".tr),
             ],
           ),
         ),
@@ -235,64 +250,14 @@ class _MedicaHistoryState extends State<MedicaHistory> {
           builder: (context, snapshot) {
             // Check the connection state of the future
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else {
               // Once the future is complete, build the UI with fetched data
               return TabBarView(
                 children: [
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width / 36, vertical: height / 46),
-                      child: Column(
-                        children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: serviceNames.length,
-                            itemBuilder: (context, index) {
-                              return Card(
-                                elevation: 3,
-                                child: ListTile(
-                                  title: Text(
-                                    serviceNames[index] ?? 'Service Name Missing',
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Username: ${usernames[index] ?? 'Username Missing'}',
-                                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                                      ),
-                                      Text(
-                                        'Reservation Date: ${reservationDateTimes[index] ?? 'Date Missing'}',
-                                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                                      ),
-                                      Text(
-                                        'Is Confirmed: ${isConfirmeds[index] ?? 'Confirmation Status Missing'}',
-                                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                                      ),
-                                      Text(
-                                        'User Confirmation: ${userConfirmations[index] ?? 'User Confirmation Missing'}',
-                                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
-                                  onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                      return const MedicaChatting();
-                                    }));
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+
                   SingleChildScrollView(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: width/36, vertical: height/46),
@@ -332,6 +297,7 @@ class _MedicaHistoryState extends State<MedicaHistory> {
                                           Text("confirmé par ${userConfirmations[index]}", style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)),
                                           SizedBox(height: height/76),
                                           Text(reservationDateTimes[index], style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)),
+                                          Text("Nombre de declaration  " +_result, style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)),
                                         ],
                                       ),
                                     ),
@@ -339,15 +305,11 @@ class _MedicaHistoryState extends State<MedicaHistory> {
                                     InkWell(
                                       splashColor: Medicacolor.transparent,
                                       highlightColor: Medicacolor.transparent,
-                                      onTap: () {
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                          return const MedicaVoicecall();
-                                        },));
-                                      },
+
                                       child: Text(
                                         isConfirmeds[index] ?? 'Confirmation Status Missing',
                                         style: urbanistMedium.copyWith(
-                                          fontSize: 11,
+                                          fontSize: 9,
                                           color: isConfirmeds[index] == 'Confirmed' ? Colors.green : Colors.red,
                                         ),
                                       ),
@@ -364,64 +326,7 @@ class _MedicaHistoryState extends State<MedicaHistory> {
                       ),
                     ),
                   ),
-                  SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width/36, vertical: height/46),
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          String serviceImage = serviceImageMap[serviceNames[index]] ?? MedicaPngImg.defaultImage;
-                          return InkWell(
-                            splashColor: Medicacolor.transparent,
-                            highlightColor: Medicacolor.transparent,
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return const MedicaChatting();
-                              },));
-                            },
-                            child: Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundColor: Medicacolor.transparent,
-                                  backgroundImage: AssetImage(serviceImage),
-                                ),
-                                SizedBox(width: width/26),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(serviceNames[index], style: urbanistBold.copyWith(fontSize: 18)), // Use usernames instead of chats
-                                    SizedBox(height: height/96),
-                                    Text("confirmé par ${userConfirmations[index]}", style: urbanistMedium.copyWith(fontSize: 14, color: Medicacolor.textgray)), // Use userConfirmations instead of subtitle
-                                  ],
-                                ),
-                                const Spacer(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(reservationDateTimes[index], style: urbanistRegular.copyWith(fontSize: 13, color: Medicacolor.textgray)), // Use reservationDateTimes instead of date
-                                    SizedBox(height: height/96),
-                                    Text(
-                                      isConfirmeds[index] ?? 'Confirmation Status Missing',
-                                      style: urbanistMedium.copyWith(
-                                        fontSize: 13,
-                                        color: isConfirmeds[index] == 'Confirmed' ? Colors.green : Colors.red,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        separatorBuilder: (context, index) {
-                          return SizedBox(height: height/36);
-                        },
-                        itemCount: serviceNames.length,
-                      ),
-                    ),
-                  ),
+
                 ],
               );
             }

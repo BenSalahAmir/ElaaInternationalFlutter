@@ -64,8 +64,8 @@ class _MedicaResetPasswordState extends State<MedicaResetPassword> {
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Error'),
-              content: Text('Failed to reset password. Please try again.'),
+              title: Text('Erreur'),
+              content: Text('Échec de la réinitialisation du mot de passe. Veuillez réessayer.'),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
@@ -76,7 +76,7 @@ class _MedicaResetPasswordState extends State<MedicaResetPassword> {
           );
         }
       } else {
-        throw Exception('Failed to reset password');
+        throw Exception('Échec de la réinitialisation du mot de passe');
       }
     } catch (error) {
       setState(() {
@@ -86,8 +86,8 @@ class _MedicaResetPasswordState extends State<MedicaResetPassword> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Failed to reset password. Please try again.'),
+          title: Text('Erreur'),
+          content: Text('Échec de la réinitialisation du mot de passe. Veuillez réessayer.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
