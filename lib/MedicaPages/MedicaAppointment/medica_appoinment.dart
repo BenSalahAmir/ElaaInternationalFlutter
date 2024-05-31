@@ -12,6 +12,7 @@ import 'package:medica/MedicaPages/MedicaAppointment/medica_reschedule.dart';
 import 'package:medica/MedicaPages/MedicaHistory/medica_chatting.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
+import 'package:medica/Service/NotificationServiceLocalNotification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/Reservation.dart';
@@ -645,7 +646,9 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                       InkWell(
                                         splashColor: Medicacolor.transparent,
                                         highlightColor: Medicacolor.transparent,
-                                        onTap: () {},
+                                        onTap: () {
+
+                                        },
                                         child: Container(
                                           height: height / 22,
                                           width: width / 2.2,

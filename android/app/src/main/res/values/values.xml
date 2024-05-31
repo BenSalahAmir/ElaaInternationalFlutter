@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="google_app_id">1:64566176053:android:4f90c73b261e6fb50dc47c</string>
+    <string name="google_api_key">AIzaSyA_ADPfKKd43uV-hriXguGLMkdEqpBTvSY</string>
+    <string name="firebase_database_url">https://elaainternational.firebaseio.com</string>
+    <string name="project_id">elaainternational</string>
+    <string name="storage_bucket">elaainternational.appspot.com</string>
+</resources>

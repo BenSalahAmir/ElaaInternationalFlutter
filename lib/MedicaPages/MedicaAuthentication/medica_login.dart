@@ -14,6 +14,8 @@ import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../Service/NotificationServiceLocalNotification.dart';
+
 
 class MedicaLogin extends StatefulWidget {
   const MedicaLogin({Key? key}) : super(key: key);
@@ -347,6 +349,15 @@ class _MedicaLoginState extends State<MedicaLogin> {
                     splashColor: Medicacolor.transparent,
                     highlightColor: Medicacolor.transparent,
                     onTap: () {
+
+
+                      NotificationServiceLocalNotification()
+                          .showNotification(title: 'Sample title', body: 'It works!');
+                      print("notification show");
+
+
+
+
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return const MedicaRegister();
