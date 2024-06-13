@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
+import 'package:medica/MedicaPages/MedicaHistory/AddReviewPage.dart';
 import 'package:medica/MedicaPages/MedicaHome/medica_doctordetails.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 
@@ -55,7 +56,7 @@ class _MedicaFavouriteState extends State<MedicaFavourite> {
                     highlightColor: Medicacolor.transparent,
                     onTap: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return const MedicaDoctorDetails();
+                        return const AddReviewPage();
                       },));
                     },
                     child: Container(

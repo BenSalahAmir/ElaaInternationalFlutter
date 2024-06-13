@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "64566176053",
-    "project_id": "elaainternational",
-    "storage_bucket": "elaainternational.appspot.com"
+    "project_number": "505942299191",
+    "project_id": "elaainternational-55e56",
+    "storage_bucket": "elaainternational-55e56.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:64566176053:android:4f90c73b261e6fb50dc47c",
+        "mobilesdk_app_id": "1:505942299191:android:f383b2e343fad80ed565b2",
         "android_client_info": {
           "package_name": "com.example.medica"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA_ADPfKKd43uV-hriXguGLMkdEqpBTvSY"
+          "current_key": "AIzaSyCsdqx1875ZhxbuXudVGa8M4S2xDjI3uy0"
         }
       ],
       "services": {

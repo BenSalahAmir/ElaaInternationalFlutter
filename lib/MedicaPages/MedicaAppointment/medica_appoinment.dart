@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
+import 'package:medica/MedicaPages/MedicaAppointment/ServiceDetails.dart';
 import 'package:medica/MedicaPages/MedicaAppointment/medica_appointmentdetails.dart';
 import 'package:medica/MedicaPages/MedicaAppointment/medica_cancelappoinment.dart';
 import 'package:medica/MedicaPages/MedicaAppointment/medica_reschedule.dart';
 import 'package:medica/MedicaPages/MedicaHistory/medica_chatting.dart';
+import 'package:medica/MedicaPages/MedicaHome/medica_doctordetails.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
 import 'package:medica/Service/NotificationServiceLocalNotification.dart';
@@ -31,26 +33,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   double width = 0.00;
   final themedata = Get.put(MedicaThemecontroler());
   List chats = ["Dr.Drake Boeson","Dr.Aidan Allende","Dr.Salvatore Heredia","Dr.Delaney Mangino","Dr.Beckett Calger"];
-  List chatimg = [
-    MedicaPngImg.articleservice,
-    MedicaPngImg.avocatservices,
-    MedicaPngImg.billetterieservices,
-    MedicaPngImg.electricienservices,
-    MedicaPngImg.Expertiseservices,
-    MedicaPngImg.labotechnicienservice,
-    MedicaPngImg.hospitalisationservice,
-    MedicaPngImg.infirmierservice,
-    MedicaPngImg.plombierservices,
-    MedicaPngImg.Rapatriementservices,
-    MedicaPngImg.Reparationservices,
-    MedicaPngImg.sanitaireservice,
-    MedicaPngImg.serrurierservices,
-    MedicaPngImg.retourDomicileservice,
-    MedicaPngImg.remorquageservice,
-    MedicaPngImg.Vitrierservices,
-    MedicaPngImg.doctor2,
-    MedicaPngImg.doctor6,
-  ];
+
 
   List callimg = [
     MedicaPngImg.msg,
@@ -74,24 +57,23 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   ];
 
   Map<String, String> serviceImageMap = {
-    "Infirmier": MedicaPngImg.infirmierservice,
-    "Electricien": MedicaPngImg.electricienservices,
-    "Vitrier": MedicaPngImg.Vitrierservices,
-    "Serrurier": MedicaPngImg.serrurierservices,
-    "Plomberie": MedicaPngImg.plombierservices,
-    "Reparation": MedicaPngImg.Reparationservices,
     "Expertise": MedicaPngImg.Expertiseservices,
     "Remorquage": MedicaPngImg.remorquageservice,
     "Technicien de laboratoire et analyse": MedicaPngImg.labotechnicienservice,
-    "Technicien de kine": MedicaPngImg.doctor2,
+    "Technicien de kine": MedicaPngImg.kine,
     "Second avis medical": MedicaPngImg.articleservice,
-    "Rapatriement": MedicaPngImg.Rapatriementservices,
-    "Sanitaire": MedicaPngImg.sanitaireservice,
-    "Evasan": MedicaPngImg.doctor6,
+    "Evasan": MedicaPngImg.Evasan,
     "Retour a domicile": MedicaPngImg.retourDomicileservice,
     "Billetterie": MedicaPngImg.billetterieservices,
     "Hospitalisation": MedicaPngImg.hospitalisationservice,
     "Avocat": MedicaPngImg.avocatservices,
+    "Ambulance": MedicaPngImg.Ambulance,
+    "Plomberie": MedicaPngImg.plombierservices,
+    "Serrurier": MedicaPngImg.serrurierservices,
+    "Vitrier": MedicaPngImg.Vitrierservices,
+    "Electricien": MedicaPngImg.electricienservices,
+    "Infirmier": MedicaPngImg.infirmierservice,
+    "Reparation": MedicaPngImg.Reparationservices,
   };
 
 
@@ -158,7 +140,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
   }
 
   void goToChat() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 0));
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const MedicaChatting()),
@@ -317,8 +299,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
       },
     );
 
-    // Delay for 5 seconds before automatically closing the dialog
-    await Future.delayed(Duration(seconds: 5));
+    //await Future.delayed(Duration(seconds: 5));
 
     // Close the dialog
     Navigator.pop(context);
@@ -341,6 +322,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     }
 
   }
+
 
 
 
@@ -371,7 +353,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
     height = size.height;
     width = size.width;
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           leadingWidth: width/1,
@@ -489,7 +471,14 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                       InkWell(
                                         splashColor: Medicacolor.transparent,
                                         highlightColor: Medicacolor.transparent,
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => MedicaDoctorDetails(serviceName: serviceNames[index]),
+                                            ),
+                                          );
+                                          },
                                         child: Container(
                                           height: height / 22,
                                           width: width / 2.5,
@@ -498,7 +487,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                             border: Border.all(color: Medicacolor.primary),
                                           ),
                                           child: Center(
-                                            child: Text("détail pour le service".tr, style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.primary)),
+                                            child: Text("Description du service".tr, style: urbanistSemiBold.copyWith(fontSize: 12, color: Medicacolor.primary)),
                                           ),
                                         ),
                                       ),
@@ -604,7 +593,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                                     border: Border.all(color: Medicacolor.green),
                                                   ),
                                                   child: Center(
-                                                    child: Text("indisponible".tr, style: urbanistSemiBold.copyWith(fontSize: 12, color: Medicacolor.green)),
+                                                    child: Text("indisponible".tr, style: urbanistSemiBold.copyWith(fontSize: 10, color: Medicacolor.green)),
                                                   ),
                                                 ),
                                               ],
@@ -614,11 +603,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                           ],
                                         ),
                                       ),
-                                      //CircleAvatar(
-                                       // radius: 28,
-                                       // backgroundColor: Medicacolor.lightprimary,
-                                        //child: Image.asset(callimg[index].toString(), height: height / 36, color: Medicacolor.primary),
-                                     // )
+
                                     ],
                                   ),
                                   SizedBox(height: height / 96),
@@ -630,7 +615,17 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                       InkWell(
                                         splashColor: Medicacolor.transparent,
                                         highlightColor: Medicacolor.transparent,
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => MedicaDoctorDetails(serviceName: serviceNames1[index]),
+                                            ),
+                                          );
+
+
+
+                                        },
                                         child: Container(
                                           height: height / 22,
                                           width: width / 2.5,
@@ -639,7 +634,7 @@ class _MedicaAppoinmentState extends State<MedicaAppoinment> {
                                             border: Border.all(color: Medicacolor.primary),
                                           ),
                                           child: Center(
-                                            child: Text("Detail pour le service".tr, style: urbanistSemiBold.copyWith(fontSize: 15, color: Medicacolor.primary)),
+                                            child: Text("Description du service".tr, style: urbanistSemiBold.copyWith(fontSize: 12, color: Medicacolor.primary)),
                                           ),
                                         ),
                                       ),

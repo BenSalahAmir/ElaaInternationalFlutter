@@ -130,6 +130,7 @@ class MedicaPngImg {
 
 
 
+
   static String electricien = "Assets/medicaimages/electricien.png";
   static String expertice = "Assets/medicaimages/Expertise.png";
   static String Infirmier = "Assets/medicaimages/Infirmier.png";
@@ -148,17 +149,21 @@ class MedicaPngImg {
   static String billetterieservices = "Assets/medicaimages/services/billetterie.png";
   static String electricienservices = "Assets/medicaimages/services/electricien.png";
   static String Expertiseservices = "Assets/medicaimages/services/Expertise.png";
-  static String labotechnicienservice = "Assets/medicaimages/services/female-laboratory-worker-character-avatar-vector.jpg";
+  static String labotechnicienservice = "Assets/medicaimages/services/laboratoire.png";
   static String hospitalisationservice = "Assets/medicaimages/services/hospitalisation.png";
   static String infirmierservice = "Assets/medicaimages/services/infirmier.png";
   static String plombierservices = "Assets/medicaimages/services/plombier.png";
-  static String Rapatriementservices = "Assets/medicaimages/services/Rapatriement.png";
   static String Reparationservices = "Assets/medicaimages/services/Reparation.png";
-  static String sanitaireservice = "Assets/medicaimages/services/sanitaire.png";
   static String serrurierservices = "Assets/medicaimages/services/serrurier.png";
   static String retourDomicileservice = "Assets/medicaimages/services/retourDomicile.png";
   static String remorquageservice = "Assets/medicaimages/services/remorquage.png";
   static String Vitrierservices = "Assets/medicaimages/services/Vitrier.png";
+  static String Ambulance = "Assets/medicaimages/services/ambulance.png";
+  static String Evasan = "Assets/medicaimages/services/evasan.png";
+  static String evasn = "Assets/medicaimages/services/evasan2.png";
+  static String kine = "Assets/medicaimages/services/kine.png";
+
+
   static const String defaultImage = 'assets/images/default.png';
 
 

@@ -7,24 +7,16 @@ import 'package:medica/MedicaString/stringtranslation.dart';
 import 'package:medica/MedicaThmes/medica_theme.dart';
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:medica/Service/NotificationServiceLocalNotification.dart';
+
 final navigatorKey = GlobalKey<NavigatorState>();
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+NotificationServiceLocalNotification notificationService = NotificationServiceLocalNotification();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //  handle in terminated state
-  var initialNotification =
-  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  if (initialNotification?.didNotificationLaunchApp == true) {
-    // LocalNotifications.onClickNotification.stream.listen((event) {
-    Future.delayed(Duration(seconds: 1), () {
-      // print(event);
-      navigatorKey.currentState!.pushNamed('/another',
-          arguments: initialNotification?.notificationResponse?.payload);
-    });
-  }
 
 
+  await notificationService.initNotification();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -47,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: MedicaMythemes.lightTheme,

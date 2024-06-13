@@ -14,7 +14,6 @@ import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../Service/NotificationServiceLocalNotification.dart';
 
 
 class MedicaLogin extends StatefulWidget {
@@ -34,6 +33,32 @@ class _MedicaLoginState extends State<MedicaLogin> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    _checkRememberMe();
+  }
+
+  Future<void> _checkRememberMe() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final bool rememberMe = prefs.getBool('rememberMe') ?? false;
+
+    if (rememberMe) {
+      // If "Remember me" is checked and user is logged in, navigate to dashboard
+      final bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+      if (isLoggedIn) {
+        _navigateToDashboard();
+      }
+    }
+  }
+  void _navigateToDashboard() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MedicaDashboard(),
+      ),
+    );
+  }
 
 
   void _togglePasswordStatus() {
@@ -99,6 +124,12 @@ class _MedicaLoginState extends State<MedicaLogin> {
           'password': passwordController.text,
         }),
       );
+      if (isChecked) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool('isLoggedIn', true);
+        prefs.setBool('rememberMe', true);
+        // Store user credentials if necessary
+      }
 
       if (response.statusCode == 200) {
         // Successfully authenticated
@@ -350,11 +381,11 @@ class _MedicaLoginState extends State<MedicaLogin> {
                     highlightColor: Medicacolor.transparent,
                     onTap: () {
 
-
+/*
                       NotificationServiceLocalNotification()
                           .showNotification(title: 'Sample title', body: 'It works!');
                       print("notification show");
-
+*/
 
 
 

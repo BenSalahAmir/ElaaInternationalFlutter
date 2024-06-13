@@ -3,13 +3,11 @@ import 'package:get/get.dart';
 import 'package:medica/MedicaGlobal/medica_color.dart';
 import 'package:medica/MedicaGlobal/medica_fonts.dart';
 import 'package:medica/MedicaGlobal/medica_images.dart';
-import 'package:medica/MedicaPages/MedicaHome/medica_doctordetails.dart';
-import 'package:medica/MedicaPages/MedicaHome/medica_favourite.dart';
-import 'package:medica/MedicaPages/MedicaHome/medica_notification.dart';
-import 'package:medica/MedicaPages/MedicaHome/medica_search.dart';
-import 'package:medica/MedicaPages/MedicaHome/medica_topdoctor.dart';
+
 import 'package:medica/MedicaThmes/medica_themecontroller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../MedicaAppointment/medica_appoinment.dart';
 
 class MedicaHome extends StatefulWidget {
   const MedicaHome({Key? key}) : super(key: key);
@@ -183,7 +181,7 @@ class _MedicaHomeState extends State<MedicaHome> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Services d'assurance".tr,style: urbanistBold.copyWith(fontSize: 20)),
-                  Text("Voir tout".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary)),
+                  //Text("Voir tout".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary)),
                 ],
               ),
               SizedBox(height: height/46),
@@ -228,12 +226,12 @@ class _MedicaHomeState extends State<MedicaHome> {
                   InkWell(
                     splashColor: Medicacolor.transparent,
                     highlightColor: Medicacolor.transparent,
-                      /*
+
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return const MedicaTopdoctor();
+                          return const MedicaAppoinment();
                         },));
-                      },*/
+                      },
                       child: Text("Voir tout".tr,style: urbanistBold.copyWith(fontSize: 14,color: Medicacolor.primary))),
                 ],
               ),

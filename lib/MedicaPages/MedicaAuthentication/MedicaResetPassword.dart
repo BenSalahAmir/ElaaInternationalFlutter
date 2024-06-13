@@ -30,7 +30,7 @@ class _MedicaResetPasswordState extends State<MedicaResetPassword> {
       isLoading = true;
     });
 
-    final url = 'http://10.0.2.2:9098/api/auth/checkEmail';
+    final url = 'https://testhebergement-33hn.onrender.com/api/auth/checkEmail';
     final headers = <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     };

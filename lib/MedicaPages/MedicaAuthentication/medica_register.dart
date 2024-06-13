@@ -87,7 +87,7 @@ class _MedicaRegisterState extends State<MedicaRegister> {
     });
 
     try {
-      final url = Uri.parse('http://10.0.2.2:9098/api/auth/signup');
+      final url = Uri.parse('https://testhebergement-33hn.onrender.com/api/auth/signup');
       final response = await http.post(
         url,
         headers: <String, String>{

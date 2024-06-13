@@ -51,7 +51,7 @@ class _MedicaNewPasswordState extends State<MedicaNewPassword> {
   }
 
   Future<void> resetPassword() async {
-    final String url = 'http://10.0.2.2:9098/api/auth/resetPassword';
+    final String url = 'https://testhebergement-33hn.onrender.com/api/auth/resetPassword';
     final String email = emailController.text;
     final String code = codeController.text;
     final String newPassword = newPasswordController.text;
