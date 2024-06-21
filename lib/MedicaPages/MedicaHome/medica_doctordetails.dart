@@ -247,4 +247,3 @@ class _MedicaDoctorDetailsState extends State<MedicaDoctorDetails> {
   }
 }
 
-
